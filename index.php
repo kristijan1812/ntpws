@@ -32,14 +32,13 @@ global $DBCON;
 			<div class="header-content">
 				<nav>
 					<ul>
-						<li><a href="index.php?menu=1"> <img src="media/images/disc-vinyl-icon.png" alt="Avatar" /> RecordView</a></li>
-						<li><a href="#">search bar</a></li>
+						<li><a id="homebtn" href="index.php?menu=1"> <img src="media/images/disc-vinyl-icon.png" alt="Avatar" /> RecordView</a></li>
 						<li id="login">
 							<div class="container">
 								<?php
 								if (isset($_SESSION['Username'])) {
 									?>
-									<p><?php echo ($_SESSION['Username']); ?></p>
+									<a href='logout.php' id='logout-button'><button>logout</button></a><p>Welcome, <?php echo ($_SESSION['Username']); ?></p>
 								<?php
 								} else {
 									?>
@@ -49,6 +48,7 @@ global $DBCON;
 											<input id="login-username" type="text" placeholder="Username" />
 											<input id="login-password" type="password" placeholder="Password" />
 											<input type="submit" value="SUBMIT" />
+											<p id="login-error">Wrong username or password.</p>
 										</form>
 									</div>
 								<?php

@@ -61,7 +61,7 @@ body {
 .header-content nav li {
 	display: inline;
 }
-.header-content nav li a {
+#homebtn {
 	display:inline-block;
 	text-align: center;
 	padding: 14px 16px;
@@ -114,6 +114,14 @@ footer a{
   overflow:hidden;
 }
 
+.container p{
+	text-align: center;
+	color: #1BBC9B;
+	line-height: 1;
+	float:right;
+	margin-right: 20px;
+}
+
 button {
   padding: 8px 15px;
   border: 0;
@@ -137,6 +145,9 @@ button {
   height:50px;
   z-index:1;
   box-shadow: 0 4px 0 darken(#ddd, 5%);
+}
+#logout-button button{
+	padding: 8px 11px;
 }
 
 .login-container.show-menu {
@@ -190,4 +201,13 @@ button {
 
 html, body {
     height: 100%;
+}
+
+#login-error{
+	color: red;
+	font-size: 12px;	
+	padding: 3px;	
+	margin: 0;	
+	display: none;
+	font-weight:300;
 }

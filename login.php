@@ -22,7 +22,9 @@ if ($rows > 0)
 }
 else
 {
+    
     header('HTTP/1.0 404 Not Found');
     echo '{ "Result": "Username not found or password incorrect."}';
+
 }
 ?>

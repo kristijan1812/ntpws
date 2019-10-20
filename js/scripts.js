@@ -29,6 +29,7 @@ $(document).ready(function(){
         $(".login-container").toggleClass("show-menu");
     })
 
+    
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
 
@@ -40,24 +41,27 @@ $(document).ready(function(){
 
         Ajax("POST", "login.php", "json", data)
         .then(function(result){
-            $("#login .container").html("<p>"+result.Username+"</p>");
+            $("#login .container").html("<a href='logout.php' id='logout-button'><button>logout</button></a><p>Welcome, "+result.Username+"</p>");
         })
         .catch(function(error){
             console.log(error);
+            $('#login-form #login-error').show();
         });
+        $(".logout-button").toggleClass("show-menu");
+
     })
 
 
-    $("#AddComment").on('click', function(e){
+    $("#AddPost").on('click', function(e){
         e.preventDefault();
 
         data = {
-            CommentText : $("#CommentText").val()
+            PostText : $("#PostText").val()
         }
         
-        Ajax("POST", "addComment.php", "html", data)
+        Ajax("POST", "addPost.php", "html", data)
         .then(function(result){
-            $("#site-comments").append(result);
+            $("#site-posts").append(result);
         })
         .catch(function(error){
             console.log(error);
@@ -65,14 +69,8 @@ $(document).ready(function(){
     })
 
     
-    $("#site-content").on('click','.delete-comment',function(e){
+    $("#site-content").on('click','.delete-post',function(e){
         //..
     })
 
-    $(document).click(function(){
-        $(".login-container").hide();
-      });
-    $(".login-container").click(function(e){
-    e.stopPropagation(); 
-    });
 })
