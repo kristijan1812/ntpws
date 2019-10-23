@@ -19,6 +19,7 @@ global $DBCON;
 	<meta name="author" content="kantolic">
 	<meta name="keywords" content="music, record, album, review">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
 	<link rel="shortcut icon" type="image/x-icon" href="media/fav/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<script src="js/jquery.js"></script>
@@ -33,16 +34,19 @@ global $DBCON;
 				<nav>
 					<ul>
 						<li><a id="homebtn" href="index.php?menu=1"> <img src="media/images/disc-vinyl-icon.png" alt="Avatar" /> RecordView</a></li>
+						
 						<li id="login">
 							<div class="container">
 								<?php
 								if (isset($_SESSION['Username'])) {
 									?>
-									<a href='logout.php' id='logout-button'><button>logout</button></a><p>Welcome, <?php echo ($_SESSION['Username']); ?></p>
+									<a href='logout.php' id='logout-button'><button class="header-button" >logout</button></a><p>Welcome, <?php echo ($_SESSION['Username']); ?></p>
 								<?php
 								} else {
 									?>
-									<button id="login-button">log in</button>
+									
+									<button class="header-button" id="login-button">log in</button>
+									<button class="header-button" id="signup-button" >sign up</button>
 									<div class="login-container">
 										<form id="login-form">
 											<input id="login-username" type="text" placeholder="Username" />
@@ -57,6 +61,7 @@ global $DBCON;
 
 							</div>
 						</li>
+							
 					</ul>
 				</nav>
 			</div>

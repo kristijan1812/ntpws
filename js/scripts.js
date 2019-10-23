@@ -24,11 +24,28 @@ window.Ajax = function(type, url, datatype, data = null)
 
 
 $(document).ready(function(){
-    $("#login-button").on('click',function(e){
-        e.preventDefault();    
-        $(".login-container").toggleClass("show-menu");
+          
+    
+    $(window).click(function() {
+        $(".login-container").hide();
+    })
+        
+    $(".login-container").on('click',function(e){
+        e.stopPropagation();
     })
 
+    $("#login-button").on('click',function(e){
+        e.stopPropagation();
+        e.preventDefault();    
+        $(".login-container").show();
+    })
+
+    
+
+    $("#signup-button").on('click',function(e){
+        e.preventDefault();    
+        $(".site-content").load("signup.php");
+    })
     
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
@@ -41,7 +58,7 @@ $(document).ready(function(){
 
         Ajax("POST", "login.php", "json", data)
         .then(function(result){
-            $("#login .container").html("<a href='logout.php' id='logout-button'><button>logout</button></a><p>Welcome, "+result.Username+"</p>");
+            $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
         })
         .catch(function(error){
             console.log(error);
@@ -68,9 +85,6 @@ $(document).ready(function(){
         });
     })
 
-    
-    $("#site-content").on('click','.delete-post',function(e){
-        //..
-    })
+
 
 })

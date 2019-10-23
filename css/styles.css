@@ -122,7 +122,7 @@ footer a{
 	margin-right: 20px;
 }
 
-button {
+.header-button {
   padding: 8px 15px;
   border: 0;
   outline: 0;
@@ -157,11 +157,12 @@ button {
 
 .post{
 	width: 90%;
-    height: 100px;
-    padding: 20px;
-	border: 5px  double white;
+    min-height: 100px;
+    padding: 12px;
+	border: 5px  double #f4f4f4;
 	border-radius: 8px;
 	margin-bottom: 30px;
+	vertical-align: middle;
 }
 
 .post:first-of-type{
@@ -170,7 +171,29 @@ button {
 .login-container.show-menu {
 	display:block;
 }
+.post-author, .post-title{
+	color:#f4f4f4;
+	margin: 0 auto;
+}
+.post-author{
+	float: right;
+}
+.post-title{
+	float: left;
+}
+.post-author a{
+	color:#f4f4f4;
+	text-decoration: none;
+}
+.post-header{
+	background-color: #1BBC9B;
+	min-height: 20px;
+	padding: 5px;
+	border: 5px  double #f4f4f4	;
+	border-radius: 8px;
 
+
+}
 #login-form {
   position: absolute;
   padding: 20px;

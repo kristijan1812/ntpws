@@ -10,11 +10,13 @@ global $DBCON;
     <?php
     $qry = mysqli_query($DBCON, "SELECT posts.*, users.UserName FROM posts INNER JOIN users ON posts.UserId = users.UserId");
     while($post = mysqli_fetch_array($qry))
-    {
-        
+    {  
         ?>
         <div class="post">
-            <p>Posted by: <a href='#'><?php echo $post['UserName']; ?>  </a></p>
+            <div class="post-header">
+                <p class="post-title"><?php echo $post['PostTitle']; ?></p>
+                <p class="post-author">Posted by: <a href='#'><?php echo $post['UserName']; ?>  </a></p>
+            </div>
             <p><?php echo $post['PostText']; ?></p>
         </div>
         <?php
