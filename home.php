@@ -42,7 +42,7 @@ if (isset($_SESSION['UserId'])){ ?>
             <input type="text" name="PostTitle" id="PostTitle" placeholder="Write Post"></input>
             <div class="submit-container">
                 <textarea name="PostText" id="PostText" placeholder="Content"></textarea>
-                <input type="submit" id="AddPost" />
+                <input type="submit" id="AddPost" value="POST"/>
                 </div>
         </form>
     </div>
