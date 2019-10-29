@@ -1,6 +1,6 @@
 # NTPWS
 
-Napredne Tehnologije Projektiranja Web Bervisa
+Napredne Tehnologije Projektiranja Web Servisa
 
 Projekt: Kristijan Antolić
 
