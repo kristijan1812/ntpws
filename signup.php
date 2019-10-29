@@ -5,4 +5,4 @@ include("dblayer.php");
 global $DBCON;
 ?>
 
-<div>TEST TEXT</div>
+<div>PLACEHOLDER TEXT</div>

@@ -28,9 +28,15 @@ $(document).ready(function(){
     
     $(window).click(function() {
         $(".login-container").hide();
+        $(".submit-container").hide();
+        $("#PostTitle").attr('placeholder', 'Write Post');
     })
         
     $(".login-container").on('click',function(e){
+        e.stopPropagation();
+    })
+
+    $(".submit-container").on('click',function(e){
         e.stopPropagation();
     })
 
@@ -40,12 +46,20 @@ $(document).ready(function(){
         $(".login-container").show();
     })
 
+    $("#PostTitle").on('click',function(e){
+        e.stopPropagation();
+        e.preventDefault();    
+        $(".submit-container").show();
+        $(this).attr('placeholder', 'Post title');
+    })
     
 
     $("#signup-button").on('click',function(e){
         e.preventDefault();    
         $(".site-content").load("signup.php");
     })
+
+    
     
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
@@ -65,6 +79,7 @@ $(document).ready(function(){
             $('#login-form #login-error').show();
         });
         $(".logout-button").toggleClass("show-menu");
+        $(".site-content").load("home.php");
 
     })
 
@@ -73,16 +88,21 @@ $(document).ready(function(){
         e.preventDefault();
 
         data = {
-            PostText : $("#PostText").val()
+            PostText : $("#PostText").val(),
+            PostTitle: $("#PostTitle").val()
         }
         
         Ajax("POST", "addPost.php", "html", data)
         .then(function(result){
-            $("#site-posts").append(result);
+            $("#site-posts").prepend(result);
         })
         .catch(function(error){
             console.log(error);
         });
+        $(".submit-container").hide();
+        $("#PostTitle").attr('placeholder', 'Write Post');
+        $("#PostTitle").val('');
+        $("#PostText").val('');
     })
 
 

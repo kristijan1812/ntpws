@@ -19,7 +19,6 @@ global $DBCON;
 	<meta name="author" content="kantolic">
 	<meta name="keywords" content="music, record, album, review">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8">
 	<link rel="shortcut icon" type="image/x-icon" href="media/fav/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<script src="js/jquery.js"></script>
@@ -38,9 +37,9 @@ global $DBCON;
 						<li id="login">
 							<div class="container">
 								<?php
-								if (isset($_SESSION['Username'])) {
+								if (isset($_SESSION['UserName'])) {
 									?>
-									<a href='logout.php' id='logout-button'><button class="header-button" >logout</button></a><p>Welcome, <?php echo ($_SESSION['Username']); ?></p>
+									<a href='logout.php' id='logout-button'><button class="header-button" >logout</button></a><p>Welcome, <?php echo ($_SESSION['UserName']); ?></p>
 								<?php
 								} else {
 									?>
@@ -74,7 +73,7 @@ global $DBCON;
 			?>
 		</main>
 		<footer class="site-footer">
-			<p>Kristijan Antolić, NTPWS 2019<a href="https://github.com/kristijan1812/ntpws" target="_blank"><img src="media/images/25231.svg" title="Github link" alt="Github link"></a><a href="#">Contact us</a></p>
+			<p>Kristijan Antolić, NTPWS 2019<a href="https://github.com/kristijan1812/ntpws" target="_blank"><img src="media/images/25231.svg" title="Github link" alt="Github link"></a></p>
 		</footer>
 	</div>
 </body>
