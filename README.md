@@ -13,6 +13,7 @@ _______
 
 TODO:
 
+* Add go back to top button
 * Add like/dislike option
 * Add sorting functionalities (buttons already exist)
 * Add some sort of web API call into solution
