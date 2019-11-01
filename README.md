@@ -13,15 +13,18 @@ _______
 
 TODO:
 
+* make button for write post for input area to display effect
 * Add go back to top button
-* Add like/dislike option
+* Add like/dislike option functionality
 * Add sorting functionalities (buttons already exist)
 * Add some sort of web API call into solution
 * Fix wrongly displayed characters (charset?)
-* Add deletion function for own post
+* Add deletion and edit function for own post 
+* 	dodaj nemogucnost da se user zove you
 * Add report to admin functionality
-* Make \n into newline on posts
 * Make signup exception if username exists
+* Disable posibility to enter empty
+* Make user per post like unique
 
 * Add administrator that can delete posts, list of reports
 

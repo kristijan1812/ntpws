@@ -18,13 +18,9 @@ window.Ajax = function(type, url, datatype, data = null)
     
 }
 
-
-
-
-
-
 $(document).ready(function(){
           
+
     
     $(window).click(function() {
         $(".login-container").hide();
@@ -103,6 +99,19 @@ $(document).ready(function(){
         $("#PostTitle").attr('placeholder', 'Write Post');
         $("#PostTitle").val('');
         $("#PostText").val('');
+    })
+
+    $("#upvote").on('click', function(e){
+        e.preventDefault();
+
+        
+        Ajax("POST", "addPost.php", "html", {Upvote:1})
+        .then(function(result){
+            $("#vote-status").html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });
     })
 
 

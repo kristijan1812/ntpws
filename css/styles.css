@@ -12,12 +12,49 @@ body {
 	font-family: proxima-nova-1,proxima-nova-2,montserrat,Helvetica,sans-serif;
 }
 
-.time-ago{
+.voting-area{
 	position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 4px;
+	right: 10px;
 }
 
+.post-edit-area{
+	position: absolute;
+	bottom: 4px;
+    left: 10px;
+}
+
+.editing-buttons{
+	display:inline;
+}
+#delete-button img{
+	max-height:25px;
+}
+#edit-button img{
+	max-height:20px;
+	margin-bottom: 3px;
+}
+}
+
+#vote-status{
+	margin-left:10px;
+}
+.vote-button {
+	cursor: pointer;
+	width: 0; 
+	height: 0; 
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-bottom: 10px solid black;
+	display: inline-block;
+	vertical-align: middle;
+  } 
+ 
+  .vote-button:first-of-type {
+	border-bottom: none;
+	border-top: 10px solid black;
+  } 
+ 
 #page {
     position: relative;
     margin: 0 auto;
@@ -26,7 +63,7 @@ body {
 }
 
 .site-content{
-	height:500px;
+	min-height:500px;
 }
 
 .site-header, .site-footer {
@@ -239,6 +276,7 @@ footer a{
 	position:relative;
 	
 }
+
 
 #AddPost{
 	padding: 8px 15px;
