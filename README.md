@@ -19,7 +19,7 @@ TODO:
 * Add sorting functionalities (buttons already exist)
 * Add some sort of web API call into solution
 * Fix wrongly displayed characters (charset?)
-* Add edit function for own post 
+* IN edit disable edit button to add always more 
 * Add report to admin functionality
 * Make signup exception if username exists or is shorter than 6
 * Make password exception if shorter than 6

@@ -249,7 +249,7 @@ footer a{
 .submit-container{
 	display:none;
 }
-#PostTitle{
+.PostTitle{
 	width: 80%;
 	margin: 0 auto 4px auto;
 	padding: 1em;
@@ -262,7 +262,7 @@ footer a{
 	font-size: 14px;
 }
 
-#PostText{
+.PostText{
 	width: 80%;
 	margin: 0 auto;
 	padding: 1em;
@@ -279,7 +279,7 @@ footer a{
 }
 
 
-#AddPost{
+.Post-button{
 	padding: 8px 15px;
 	border: 0;
 	outline: 0;

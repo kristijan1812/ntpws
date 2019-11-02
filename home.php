@@ -39,10 +39,10 @@ function get_timeago($ptime)
 if (isset($_SESSION['UserId'])){ ?>
     <div id="submit-post-form" style="margin-bottom: 20px;">
         <form id="post-form">
-            <input type="text" name="PostTitle" id="PostTitle" placeholder="Write Post"></input>
+            <input type="text" name="PostTitle" id="PostTitle" class="PostTitle" placeholder="Write Post"></input>
             <div class="submit-container">
-                <textarea name="PostText" id="PostText" placeholder="Content"></textarea>
-                <input type="submit" id="AddPost" value="POST"/>
+                <textarea name="PostText" id="PostText" class="PostText" placeholder="Content"></textarea>
+                <input type="submit" class="Post-button" id="EditPost" value="POST"/>
                 </div>
         </form>
     </div>
@@ -90,7 +90,7 @@ else{ ?>
                     echo $author; 
                 ?>, <?php echo $timeago; ?>  </a></p>
             </div>
-            <p style='margin-bottom: 20px;'><?php echo nl2br($post['PostText']); ?></p><hr style="margin-bottom:36px;"/>
+            <p class ="post-text-paragraph" style='margin-bottom: 20px;'><?php echo nl2br($post['PostText']); ?></p><hr style="margin-bottom:36px;"/>
             <div class="post-edit-area">
                 <?php
                 if (isset($_SESSION['UserName']) && $post['UserId'] == $_SESSION['UserId']){?>

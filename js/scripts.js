@@ -129,5 +129,55 @@ $(document).ready(function(){
             });
         }
     })
+    $('.site-content').on('click', '.edit-button', function(e){
+        e.preventDefault();
+        $PostText_edit = $(this).parent().siblings(".post-text-paragraph").text();
+        $PostTitle_edit = $(this).parent().siblings(".post-header").find(".post-title").text();
+        
+        $(this).parent().siblings(".post-header").find(".post-title").hide();
+        $(this).parent().siblings(".post-header").append("<input type='text' name='PostTitle' id='PostTitle_edited' class='PostTitle' style='border:none;' placeholder='Edit Post Title' value='"+$PostTitle_edit+"'></input>");
+
+        $(this).parent().siblings(".post-text-paragraph").after("<textarea name='PostText' id='PostText_edited' class='PostText' style='background-color:transparent;margin-top:10px;width: 99%;padding:0;' placeholder='Edit content'>"+$PostText_edit+"</textarea>");
+        $(this).parent().siblings(".post-text-paragraph").hide();
+        
+        if($(this).parent('#EditPost').length == 0){
+            $(this).parent().siblings(".PostText").after("<input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='EditPost' value='POST'/>");
+        }
+        if($(this).parent('#CancelEditPost').length == 0){
+            $(this).parent().siblings(".Post-button").after("<input type='submit' class='Post-button' style='display:inline;' id='CancelEditPost' value='CANCEL'/>");
+        }
+        $(this).prop('disabled', true);
+    })
+
+    $('.site-content').on('click', '#CancelEditPost', function(e){
+        e.preventDefault();
+        
+        
+        $(this).siblings(".post-header").find(".post-title").show();
+        $(this).siblings(".post-header").find("#PostTitle_edited").remove();
+        $(this).siblings(".post-text-paragraph").show();
+        $(this).siblings("#PostText_edited").remove();
+        $(this).siblings("#EditPost").remove();
+        $(this).remove();
+        $(this).siblings('.post-edit-area').children(".edit-button").prop('disabled', false);
+    })
+
+    $('.site-content').on('click', '#EditPost', function(e){
+        e.preventDefault();
+        var confirmation = confirm("Are you sure you want to remove this post?");
+        $id_from_this_post = $(this).attr('PostId');
+        if (confirmation) {
+            var data = {
+                "PostId" : $id_from_this_post
+            }
+            Ajax("POST", "deletePost.php", "html", data)
+            .then(function(result){
+                $(".post[postid='" + $id_from_this_post + "']").html(result);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }
+    })
 
 })

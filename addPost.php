@@ -24,7 +24,7 @@ if (isset($_SESSION['UserId'])){
         <p class="post-title"><?php echo $posttitle; ?></p>
         <p class="post-author"><a href='#'>you, right now  </a></p>
     </div>
-    <p style='margin-bottom: 20px;'><?php echo $posttext; ?></p><hr style="margin-bottom:36px;"/>
+    <p class ="post-text-paragraph" style='margin-bottom: 20px;'><?php echo $posttext; ?></p><hr style="margin-bottom:36px;"/>
     <div class="post-edit-area">
         <div class="editing-buttons delete-button" postid="<?php echo $postId; ?>"><img src="media/images/delete-button.png" /></div>
         <div class="editing-buttons edit-button" postid="<?php echo $postId; ?>"><img src="media/images/edit-button.png" /></div>  
