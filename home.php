@@ -61,13 +61,16 @@ else{ ?>
 <div id="site-posts">
     <?php
     $qry = mysqli_query($DBCON, "SELECT posts.*, users.UserName FROM posts INNER JOIN users ON posts.UserId = users.UserId ORDER BY PostDate DESC");
-    $qry_likes = mysqli_query($DBCON, "SELECT PostId FROM likes WHERE likes.UserId=".$_SESSION['UserId']."");
-    $qry_likes_rows = [];
-    while($row = mysqli_fetch_array($qry_likes))
-    {
-        $qry_likes_rows[] = $row['PostId'];
-        
+    if (isset($_SESSION['UserId'])){
+        $qry_likes = mysqli_query($DBCON, "SELECT PostId FROM likes WHERE likes.UserId=".$_SESSION['UserId']."");
+        $qry_likes_rows = [];
+        while($row = mysqli_fetch_array($qry_likes))
+        {
+            $qry_likes_rows[] = $row['PostId'];
+        }
     }
+    
+    
     while($post = mysqli_fetch_array($qry))
     {  
         $timeago=get_timeago(strtotime($post['PostDate']));
@@ -78,7 +81,7 @@ else{ ?>
             $like_status += $like['Value'];
         }
         ?>
-        <div class="post" postId="<?php echo $post['PostId']; ?>">
+        <div class="post" postid="<?php echo $post['PostId']; ?>">
             <div class="post-header">
                 <p class="post-title"><?php echo $post['PostTitle']; ?></p>
                 <p class="post-author"><a href='#'><?php 
@@ -91,21 +94,21 @@ else{ ?>
             <div class="post-edit-area">
                 <?php
                 if (isset($_SESSION['UserName']) && $post['UserId'] == $_SESSION['UserId']){?>
-                    <div class="editing-buttons" id="delete-button"><img src="media/images/delete-button.png" /></div>
-                    <div class="editing-buttons" id="edit-button"><img src="media/images/edit-button.png" /></div><?php
+                    <div class="editing-buttons delete-button" postId="<?php echo $post['PostId']; ?>"><img src="media/images/delete-button.png" /></div>
+                    <div class="editing-buttons edit-button" postId="<?php echo $post['PostId']; ?>"><img src="media/images/edit-button.png" /></div><?php
                 }
                 
                 ?>
             </div>
             <div class="voting-area"><?php 
                 if (isset($_SESSION['UserId']) && in_array($post['PostId'], $qry_likes_rows)){ ?> 
-                    <div class="vote-button" id="upvote" style="border-top-color: red;"></div>
-                    <div class="vote-button" id="downvote" style="border-bottom-color: red;"></div><?php
+                    <div class="vote-button upvote" style="border-top-color: red;"></div>
+                    <div class="vote-button downvote" style="border-bottom-color: red;"></div><?php
                 
                 }
                 else{
-                    ?><div class="vote-button" id="upvote"></div>
-                    <div class="vote-button" id="downvote"></div><?php
+                    ?><div class="vote-button upvote"></div>
+                    <div class="vote-button downvote"></div><?php
                 }
                 ?>
                 

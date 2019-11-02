@@ -26,11 +26,12 @@ body {
 
 .editing-buttons{
 	display:inline;
+	cursor: pointer;
 }
-#delete-button img{
+.delete-button img{
 	max-height:25px;
 }
-#edit-button img{
+.edit-button img{
 	max-height:20px;
 	margin-bottom: 3px;
 }

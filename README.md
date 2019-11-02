@@ -19,10 +19,10 @@ TODO:
 * Add sorting functionalities (buttons already exist)
 * Add some sort of web API call into solution
 * Fix wrongly displayed characters (charset?)
-* Add deletion and edit function for own post 
-* 	dodaj nemogucnost da se user zove you
+* Add edit function for own post 
 * Add report to admin functionality
-* Make signup exception if username exists
+* Make signup exception if username exists or is shorter than 6
+* Make password exception if shorter than 6
 * Disable posibility to enter empty
 * Make user per post like unique
 

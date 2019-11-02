@@ -20,8 +20,6 @@ window.Ajax = function(type, url, datatype, data = null)
 
 $(document).ready(function(){
           
-
-    
     $(window).click(function() {
         $(".login-container").hide();
         $(".submit-container").hide();
@@ -32,7 +30,7 @@ $(document).ready(function(){
         e.stopPropagation();
     })
 
-    $(".submit-container").on('click',function(e){
+    $('.site-content').on('click', '.submit-container', function(e){
         e.stopPropagation();
     })
 
@@ -42,7 +40,7 @@ $(document).ready(function(){
         $(".login-container").show();
     })
 
-    $("#PostTitle").on('click',function(e){
+    $('.site-content').on('click', '#PostTitle', function(e){
         e.stopPropagation();
         e.preventDefault();    
         $(".submit-container").show();
@@ -80,7 +78,7 @@ $(document).ready(function(){
     })
 
 
-    $("#AddPost").on('click', function(e){
+    $('.site-content').on('click', '#AddPost', function(e){
         e.preventDefault();
 
         data = {
@@ -101,7 +99,7 @@ $(document).ready(function(){
         $("#PostText").val('');
     })
 
-    $("#upvote").on('click', function(e){
+    $('.site-content').on('click', '.upvote', function(e){
         e.preventDefault();
 
         
@@ -114,6 +112,22 @@ $(document).ready(function(){
         });
     })
 
-
+    $('.site-content').on('click', '.delete-button', function(e){
+        e.preventDefault();
+        var confirmation = confirm("Are you sure you want to remove this post?");
+        $id_from_this_post = $(this).attr('PostId');
+        if (confirmation) {
+            var data = {
+                "PostId" : $id_from_this_post
+            }
+            Ajax("POST", "deletePost.php", "html", data)
+            .then(function(result){
+                $(".post[postid='" + $id_from_this_post + "']").html(result);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }
+    })
 
 })
