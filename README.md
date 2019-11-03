@@ -14,7 +14,6 @@ _______
 TODO:
 
 * make button for write post for input area to display effect
-* Add go back to top button
 * Add like/dislike option functionality
 * Add sorting functionalities (buttons already exist)
 * Add some sort of web API call into solution

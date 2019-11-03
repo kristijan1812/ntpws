@@ -28,6 +28,7 @@ global $DBCON;
 <body>
 
 	<div id="page">
+		<button id="button-back-to-top" title="Go to top"><div id="top-arrow"></div></button>
 		<header class="site-header">
 			<div class="header-content">
 				<nav>

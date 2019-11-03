@@ -82,8 +82,8 @@ $(document).ready(function(){
         e.preventDefault();
 
         data = {
-            PostText : $("#PostText").val(),
-            PostTitle: $("#PostTitle").val()
+            "PostText" : $("#PostText").val(),
+            "PostTitle": $("#PostTitle").val()
         }
         
         Ajax("POST", "addPost.php", "html", data)
@@ -103,13 +103,13 @@ $(document).ready(function(){
         e.preventDefault();
 
         
-        Ajax("POST", "addPost.php", "html", {Upvote:1})
-        .then(function(result){
-            $("#vote-status").html(result);
-        })
-        .catch(function(error){
-            console.log(error);
-        });
+        Ajax("POST", "voting.php", "html", {"Upvote":1});
+        // .then(function(result){
+        //     $("#vote-status").html(result);
+        // })
+        // .catch(function(error){
+        //     console.log(error);
+        // });
     })
 
     $('.site-content').on('click', '.delete-button', function(e){
@@ -183,5 +183,18 @@ $(document).ready(function(){
         });
         
     })
+
+    $('#page').scroll(function() {
+        if ($('#page').scrollTop() > 2000) {
+        $('#button-back-to-top').fadeIn(300);
+        } else {
+        $('#button-back-to-top').fadeOut(300);
+        }
+    });
+
+    $('#button-back-to-top').on('click', function(e) {
+        e.preventDefault();
+        $('#page').animate({scrollTop:0}, '300');
+    });
 
 })
