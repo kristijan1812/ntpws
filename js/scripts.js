@@ -19,13 +19,20 @@ window.Ajax = function(type, url, datatype, data = null)
 }
 
 $(document).ready(function(){
+    // $("#hider").hide();
+    // $("#popup_box_signup").hide();
           
     $(window).click(function() {
         $(".login-container").hide();
         $(".submit-container").hide();
         $("#PostTitle").attr('placeholder', 'Write Post');
+        $("#hider").fadeOut(200);
+        $('#popup_box_signup').fadeOut(200); 
     })
-        
+    $('#popup_box_signup').on('click',function(e){
+        e.stopPropagation();
+    })
+
     $(".login-container").on('click',function(e){
         e.stopPropagation();
     })
@@ -49,10 +56,18 @@ $(document).ready(function(){
     
 
     $("#signup-button").on('click',function(e){
-        e.preventDefault();    
-        $(".site-content").load("signup.php");
+        e.preventDefault(); 
+        e.stopPropagation();   
+        $("#hider").fadeIn(200);
+        $('#popup_box_signup').fadeIn(200);
+        // $(".site-content").load("signup.php");
     })
-
+    $("#buttonClose_signup_popup_box").on('click',function(e){
+        e.preventDefault();   
+        $("#hider").fadeOut(200);
+        $('#popup_box_signup').fadeOut(200); 
+    })
+    
     
     
     $('#login-form input[type="submit"]').on('click',function(e){

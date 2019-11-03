@@ -26,7 +26,11 @@ global $DBCON;
 </head>
 
 <body>
-
+	<div id="hider"></div>
+	<div id="popup_box_signup">
+		<div id="website-logo-signup"><img src="media/images/disc-vinyl-icon.png" alt="RecordView" /></div>
+		<a id="buttonClose_signup_popup_box">Close</a>
+	</div>
 	<div id="page">
 		<button id="button-back-to-top" title="Go to top"><div id="top-arrow"></div></button>
 		<header class="site-header">
