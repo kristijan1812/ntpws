@@ -158,26 +158,30 @@ $(document).ready(function(){
         $(this).siblings(".post-text-paragraph").show();
         $(this).siblings("#PostText_edited").remove();
         $(this).siblings("#EditPost").remove();
-        $(this).remove();
         $(this).siblings('.post-edit-area').children(".edit-button").prop('disabled', false);
+        $(this).remove();
+        
     })
 
     $('.site-content').on('click', '#EditPost', function(e){
         e.preventDefault();
-        var confirmation = confirm("Are you sure you want to remove this post?");
-        $id_from_this_post = $(this).attr('PostId');
-        if (confirmation) {
-            var data = {
-                "PostId" : $id_from_this_post
-            }
-            Ajax("POST", "deletePost.php", "html", data)
-            .then(function(result){
-                $(".post[postid='" + $id_from_this_post + "']").html(result);
-            })
-            .catch(function(error){
-                console.log(error);
-            });
+        $id_from_this_post = $(this).parents(".post").attr("postid");
+        var data = {
+            "PostId" : $id_from_this_post,
+            "NewTitle" : $(this).siblings(".post-header").children("#PostTitle_edited").val(),
+            "NewText" : $(this).siblings("#PostText_edited").val(),
+            "PostAuthor" : $(this).siblings(".post-header").children(".post-author").children("a").text(),
+            "PostLikes" : $(this).siblings(".voting-area").children("#vote-status").text()
+
         }
+        Ajax("POST", "editPost.php", "html", data)
+        .then(function(result){
+            $(".post[postid='" + $id_from_this_post + "']").html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+        
     })
 
 })
