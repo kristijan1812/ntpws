@@ -127,7 +127,7 @@ $(document).ready(function(){
     
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
-
+        //TODO: exception if empty
         var data = { 
             "Username": $("#login-username").val(),
             "Password": $("#login-password").val()
