@@ -23,13 +23,24 @@ global $DBCON;
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<script src="js/jquery.js"></script>
 	<script src="js/scripts.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 </head>
 
 <body>
-	<div id="hider"></div>
-	<div id="popup_box_signup">
-		<div id="website-logo-signup"><img src="media/images/disc-vinyl-icon.png" alt="RecordView" /></div>
-		<a id="buttonClose_signup_popup_box">Close</a>
+	<div id="hider" style="display:none;"></div>
+	<div id="popup_box_signup" style="display:none;">
+		<div id="website-logo-signup"><img src="media/images/disc-vinyl-icon.png" alt="RecordView" />RecordView - Sign up</div>
+		<form id="signup-form">
+			<input class ="input-data" id="signup-username" type="text" placeholder="Username" />
+			<input class ="input-data" id="signup-password" type="password" placeholder="Password" />
+			<input class ="input-data" id="confirm-password" type="password" placeholder="Confirm Password" />
+			<p id="msg-password-match"></p>
+			<div id="recaptcha-div"></div>
+			<p id="recaptcha-error" style="visibility:hidden;">The captcha verification failed. Please try again.</p>
+			<input class ="input-data" type="submit" value="SUBMIT" />
+		</form>
+		
+		<a id="buttonClose_signup_popup_box">X</a>
 	</div>
 	<div id="page">
 		<button id="button-back-to-top" title="Go to top"><div id="top-arrow"></div></button>
@@ -53,9 +64,9 @@ global $DBCON;
 									<button class="header-button" id="signup-button" >sign up</button>
 									<div class="login-container">
 										<form id="login-form">
-											<input id="login-username" type="text" placeholder="Username" />
-											<input id="login-password" type="password" placeholder="Password" />
-											<input type="submit" value="SUBMIT" />
+											<input class ="input-data" id="login-username" type="text" placeholder="Username" />
+											<input class ="input-data" id="login-password" type="password" placeholder="Password" />
+											<input class ="input-data" type="submit" value="SUBMIT" />
 											<p id="login-error">Wrong username or password.</p>
 										</form>
 									</div>

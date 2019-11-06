@@ -16,13 +16,12 @@ TODO:
 * make button for write post for input area to display effect
 * Add like/dislike option functionality
 * Add sorting functionalities (buttons already exist)
-* Add some sort of web API call into solution
 * Add report to admin functionality
 * Make signup exception if username exists or is shorter than 6
 * Make password exception if shorter than 6
 * Disable posibility to enter empty
 * Make user per post like unique
-
+* Disable username or password with spaces
 * Add administrator that can delete posts, list of reports
 
 

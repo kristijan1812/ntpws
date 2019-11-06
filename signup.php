@@ -3,15 +3,22 @@
 include("dblayer.php");
 
 global $DBCON;
+
+$username = $_POST['Username'];
+$password = $_POST['Password'];
+$signup_qry = mysqli_query($DBCON, 'INSERT INTO users (`UserName`, `Password`) VALUES ("'.$username.'", "'.md5($password).'")');
+
+
+echo '{"Miki": "Milane"}';
+// if ($signup_qry)
+// {
+//     echo '{"Username": "'.$username.'", "Password": "'.password.'"}';   
+
+// }
+// else
+// {
+//     echo '{ "Result": "Sign up failed, please try again later."}';
+
+// }
 ?>
 
-<div id="signup-outer-container">
-    <div class="signup-container">
-        <form id="signup-form">
-            <input id="signup-username" type="text" placeholder="Username" />
-            <input id="signup-password" type="password" placeholder="Password" />
-            <input type="submit" value="SUBMIT" />
-            <p id="signup-error">Wrong username or password.</p>
-        </form>
-    </div>
-</div>

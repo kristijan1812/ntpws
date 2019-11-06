@@ -5,8 +5,8 @@ include("dblayer.php");
 global $DBCON;
 
 
-$username = mysqli_real_escape_string($DBCON, $_POST['Username']);
-$password = mysqli_real_escape_string($DBCON, $_POST['Password']);
+$username = $_POST['Username'];
+$password = $_POST['Password'];
 
 
 $qry = 'SELECT * FROM `users` WHERE `Username` = "'.$username.'" AND `Password` = "'.md5($password).'"';

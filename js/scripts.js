@@ -18,9 +18,14 @@ window.Ajax = function(type, url, datatype, data = null)
     
 }
 
+var onloadCallback = function() {
+    grecaptcha.render('recaptcha-div', {
+      'sitekey' : '6LdKBcEUAAAAAAqA2Zm2J2BsEcWKDum0Y7jSSr0a'
+    });
+  };
+
+
 $(document).ready(function(){
-    // $("#hider").hide();
-    // $("#popup_box_signup").hide();
           
     $(window).click(function() {
         $(".login-container").hide();
@@ -60,7 +65,6 @@ $(document).ready(function(){
         e.stopPropagation();   
         $("#hider").fadeIn(200);
         $('#popup_box_signup').fadeIn(200);
-        // $(".site-content").load("signup.php");
     })
     $("#buttonClose_signup_popup_box").on('click',function(e){
         e.preventDefault();   
@@ -68,7 +72,58 @@ $(document).ready(function(){
         $('#popup_box_signup').fadeOut(200); 
     })
     
-    
+    $("#confirm-password").keyup(function(){
+        $('#recaptcha-error').css("visibility", "hidden");
+        if ($("#signup-password").val() != $("#confirm-password").val()) {
+            $("#msg-password-match").html("Passwords don't match!").css("color","red");
+        }else{
+            $("#msg-password-match").html("Passwords match!").css("color","green");
+       }
+    });
+
+    $('#signup-form input[type="submit"]').on('click',function(e){
+        e.preventDefault();
+        var captcha_response = grecaptcha.getResponse();
+        if (captcha_response.length == 0){
+            $('#recaptcha-error').css("visibility", "visible");
+        }
+       else{
+        $('#recaptcha-error').css("visibility", "hidden");
+        if ($(this).siblings("#confirm-password").val() == $(this).siblings("#signup-password").val()){
+            var data = { 
+                "Username": $("#signup-username").val(),
+                "Password": $("#signup-password").val()
+            }
+            // SIGNUP
+            Ajax("POST", "signup.php", "json", data)
+            .then(function(result){
+                $("#hider").hide();
+                $("#popup_box_signup").hide();
+            })
+            .catch(function(error){
+                console.log(error);
+                return false;
+            });
+            
+            //THEN LOGIN
+            Ajax("POST", "login.php", "json", data)
+            .then(function(result){
+                $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
+                $(".logout-button").toggleClass("show-menu");
+                $(".site-content").load("home.php");
+            })
+            .catch(function(error){
+                console.log(error);
+                $('#login-form #login-error').show();
+            });
+
+        
+        }
+        else{
+            $('#recaptcha-error').html("Passwords don't match!").css("visibility", "visible");
+        }
+       }
+    })
     
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
@@ -82,13 +137,14 @@ $(document).ready(function(){
         Ajax("POST", "login.php", "json", data)
         .then(function(result){
             $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
+            $(".logout-button").toggleClass("show-menu");
+            $(".site-content").load("home.php");
         })
         .catch(function(error){
             console.log(error);
             $('#login-form #login-error').show();
         });
-        $(".logout-button").toggleClass("show-menu");
-        $(".site-content").load("home.php");
+        
 
     })
 

@@ -365,7 +365,7 @@ footer a{
 
 
 }
-#login-form {
+#login-form, #signup-form{
   position: absolute;
   padding: 20px;
   margin:50px 10px 0px 0px;
@@ -374,7 +374,11 @@ footer a{
   box-shadow: 0 4px 0 darken(#ddd, 5%);
 }
 
-#login-form input{
+#signup-form{
+	margin:0;
+	width: 92%;
+}
+.input-data{
     width: 90%;
     padding: 8px;
     margin-bottom: 12px;
@@ -385,19 +389,43 @@ footer a{
     font-style: italic;
     border-radius: 2px;
     
-  }
-  
+}
+#signup-form .input-data{
+	width:62%;
+	display:block;
+	margin-bottom:10px;
+}
+#signup-form .input-data:last-child{
+	margin-bottom: 0;
+}
+
+
+
+#buttonClose_signup_popup_box{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	border-radius: 2px;
+	padding-inline: 10px;
+	padding-block: 2px;
+	cursor: default;
+	text-transform: uppercase;
+	user-select: none;
+}
+
 #login-form input:last-child{
       margin-bottom: 0;
 }
 
-#login-form input[type="submit"] {
+#login-form input[type="submit"], #signup-form input[type="submit"], #buttonClose_signup_popup_box{
 	color: #ffF;
 	background: #1BBC9B;
 	font-style: normal;
 	box-shadow: 0 4px 0 darken(#1BBC9B, 5%);
 }
-
+#signup-form input[type="submit"]{
+	width: 32%;
+}
 
 html, body {
     height: 100%;
@@ -436,26 +464,49 @@ html, body {
 	top: 50%;
 	left: 50%;
 	width:500px;
-	height:300px;
-	margin-top: -150px; /*set to a negative number 1/2 of your height*/
+	height:370px;
+	margin-top: -185px; /*set to a negative number 1/2 of your height*/
 	margin-left: -250px; /*set to a negative number 1/2 of your width*/
 	border: 1px solid #ccc;
 	border:  2px solid black;
 	border-radius: 5px;
-	background-color: #f4f4f4;
+	background-color:#ddd;
 	opacity:0.9;
 	z-index:100; 
 
 }
+#recaptcha-div{
+	padding-bottom: 8px;
+}
+
+#recaptcha-error{
+	color: #D8000C;
+	background-color: #FFBABA;
+	border-radius: 2px;
+	padding-inline: 10px;
+	cursor: default;
+	border: 1px solid#D8000C;
+	margin: 0;
+	font-size: 12px;
+	width: 57%;
+	margin-bottom: 8px;
+}
 
 #website-logo-signup{
-	margin: 0 auto;
-	width: 30px;
-	margin-top: 10px;
+	padding: 20px 20px 0px 20px;
 }
 
 #website-logo-signup img{
 	max-height:30px;
 	vertical-align: middle;
 	border-radius: 50%;
+	padding-right:10px;
+}
+
+#msg-password-match{
+	position: absolute;
+    left: 340px;
+	top: 100px;
+	font-size: 13px;
+
 }
