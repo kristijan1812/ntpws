@@ -33,6 +33,9 @@ $(document).ready(function(){
         $("#PostTitle").attr('placeholder', 'Write Post');
         $("#hider").fadeOut(200);
         $('#popup_box_signup').fadeOut(200); 
+        $('#signup-username').val(''); 
+        $('#signup-password').val(''); 
+        $('#confirm-password').val('');
     })
     $('#popup_box_signup').on('click',function(e){
         e.stopPropagation();
@@ -70,6 +73,9 @@ $(document).ready(function(){
         e.preventDefault();   
         $("#hider").fadeOut(200);
         $('#popup_box_signup').fadeOut(200); 
+        $('#signup-username').val(''); 
+        $('#signup-password').val(''); 
+        $('#confirm-password').val('');
     })
     
     $("#confirm-password").keyup(function(){
@@ -95,27 +101,34 @@ $(document).ready(function(){
                 "Password": $("#signup-password").val()
             }
             // SIGNUP
-            Ajax("POST", "signup.php", "json", data)
+            Ajax("POST", "signup.php", "text", data)
             .then(function(result){
-                $("#hider").hide();
-                $("#popup_box_signup").hide();
+                if(result == 'taken'){
+                    $("#msg-username-taken").css("visibility", "visible");
+                }
+                else{
+                    //THEN LOGIN
+                    Ajax("POST", "login.php", "json", data)
+                    .then(function(result){
+                        $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
+                        $(".logout-button").toggleClass("show-menu");
+                        $(".site-content").load("home.php");
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                        $('#login-form #login-error').show();
+                    });
+                    $("#hider").hide();
+                    $("#popup_box_signup").hide();
+                }
+                
             })
             .catch(function(error){
                 console.log(error);
                 return false;
             });
             
-            //THEN LOGIN
-            Ajax("POST", "login.php", "json", data)
-            .then(function(result){
-                $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
-                $(".logout-button").toggleClass("show-menu");
-                $(".site-content").load("home.php");
-            })
-            .catch(function(error){
-                console.log(error);
-                $('#login-form #login-error').show();
-            });
+            
 
         
         }

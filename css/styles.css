@@ -399,7 +399,14 @@ footer a{
 	margin-bottom: 0;
 }
 
-
+#msg-username-taken{
+	position: absolute;
+	left: 340px;
+	top: 13px;
+	font-size: 13px;
+	color:
+	red;
+}
 
 #buttonClose_signup_popup_box{
 	position: absolute;
