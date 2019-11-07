@@ -27,19 +27,17 @@ global $DBCON;
 </head>
 
 <body>
-	<!-- <div id="hider" style="display:none;"></div>
-	<div id="popup_box_signup" style="display:none;"> -->
-	<div id="hider"></div>
-	<div id="popup_box_signup">
+	<div id="hider" style="display:none;"></div>
+	<div id="popup_box_signup" style="display:none;">
 		<div id="website-logo-signup"><img src="media/images/disc-vinyl-icon.png" alt="RecordView" />RecordView - Sign up</div>
 		<form id="signup-form">
-			<input class ="input-data" id="signup-username" type="text" placeholder="Username" />
-			<input class ="input-data" id="signup-password" type="password" placeholder="Password" />
-			<input class ="input-data" id="confirm-password" type="password" placeholder="Confirm Password" />
+			<input class ="input-data" id="signup-username" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" />
+			<input class ="input-data" id="signup-password" type="password" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" />
+			<input class ="input-data" id="confirm-password" type="password" minlength=4 maxlength=15 placeholder="Confirm Password" />
 			<p id="msg-username-taken" style="visibility:hidden;">Username already taken!</p>
 			<p id="msg-password-match"></p>
 			<div id="recaptcha-div"></div>
-			<p id="recaptcha-error" style="visibility:hidden;">The captcha verification failed. Please try again.</p>
+			<p id="recaptcha-error" style="visibility:hidden;"></p>
 			<input class ="input-data" type="submit" value="SUBMIT" />
 		</form>
 		
@@ -85,7 +83,7 @@ global $DBCON;
 			</div>
 		</header>
 		<main class="site-content">
-			<?php
+		<?php
 			if (!isset($_GET['menu']) || $_GET['menu'] == 1) {
 				include("home.php");
 			}

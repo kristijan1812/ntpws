@@ -36,6 +36,10 @@ $(document).ready(function(){
         $('#signup-username').val(''); 
         $('#signup-password').val(''); 
         $('#confirm-password').val('');
+        $("#msg-password-match").text('');
+        $('#msg-username-taken').text('');
+        $('#recaptcha-error').css("visibility", "hidden");
+        $("#msg-post-short").css("visibility", "hidden");
     })
     $('#popup_box_signup').on('click',function(e){
         e.stopPropagation();
@@ -76,6 +80,9 @@ $(document).ready(function(){
         $('#signup-username').val(''); 
         $('#signup-password').val(''); 
         $('#confirm-password').val('');
+        $("#msg-password-match").text('');
+        $('#msg-username-taken').text('');
+        $('#recaptcha-error').css("visibility", "hidden");
     })
     
     $("#confirm-password").keyup(function(){
@@ -90,8 +97,11 @@ $(document).ready(function(){
     $('#signup-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
         var captcha_response = grecaptcha.getResponse();
-        if (captcha_response.length == 0){
-            $('#recaptcha-error').css("visibility", "visible");
+        if($("#signup-username").val().length < 4 || $("#signup-password").val().length < 4 ){
+            $('#recaptcha-error').html("Username and password must be at least 4 characters long.").css("visibility", "visible");
+        }
+        else if(captcha_response.length == 0){
+            $('#recaptcha-error').html("The captcha verification failed. Please try again.").css("visibility", "visible");
         }
        else{
         $('#recaptcha-error').css("visibility", "hidden");
@@ -164,23 +174,33 @@ $(document).ready(function(){
 
     $('.site-content').on('click', '#AddPost', function(e){
         e.preventDefault();
-
-        data = {
-            "PostText" : $("#PostText").val(),
-            "PostTitle": $("#PostTitle").val()
+        if($("#PostTitle").val().length < 6 || $("#PostText").val().length < 300){
+            $("#msg-post-short").html("The post title (min. 6 characters) and post content (min. 300) characters are too short!").css("visibility", "visible");
         }
-        
-        Ajax("POST", "addPost.php", "html", data)
-        .then(function(result){
-            $("#site-posts").prepend(result);
-        })
-        .catch(function(error){
-            console.log(error);
-        });
-        $(".submit-container").hide();
-        $("#PostTitle").attr('placeholder', 'Write Post');
-        $("#PostTitle").val('');
-        $("#PostText").val('');
+        else if($("#PostTitle").val().length < 6){
+            $("#msg-post-short").html("The post title (min. 6 characters) is too short!").css("visibility", "visible");
+        }
+        else if($("#PostText").val().length < 300){
+            $("#msg-post-short").html("The post content (min. 6 characters) is too short!").css("visibility", "visible");
+        }
+        else{
+            data = {
+                "PostText" : $("#PostText").val(),
+                "PostTitle": $("#PostTitle").val()
+            }
+            
+            Ajax("POST", "addPost.php", "html", data)
+            .then(function(result){
+                $("#site-posts").prepend(result);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+            $(".submit-container").hide();
+            $("#PostTitle").attr('placeholder', 'Write Post');
+            $("#PostTitle").val('');
+            $("#PostText").val('');
+        }  
     })
 
     $('.site-content').on('click', '.upvote', function(e){

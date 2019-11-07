@@ -325,13 +325,14 @@ footer a{
 #submit-post-form{
 	width: 58.5%;
 	margin: 0 auto;
+	position:relative;
 }
 
 .post{
 	width: 90%;
     min-height: 100px;
     padding: 12px;
-	border: 5px  double #f4f4f4;
+	border: 2px solid #CCC;
 	border-radius: 8px;
 	margin: 0 auto 30px auto;
 	vertical-align: middle;
@@ -345,6 +346,7 @@ footer a{
 .post-author, .post-title{
 	color:#f4f4f4;
 	margin: 0 auto;
+	line-height: 1;
 }
 .post-author{
 	float: right;
@@ -360,7 +362,7 @@ footer a{
 	background-color: #1BBC9B;
 	min-height: 20px;
 	padding: 5px;
-	border: 5px  double #f4f4f4	;
+	border: 2px solid #CCC;
 	border-radius: 8px;
 
 
@@ -399,14 +401,24 @@ footer a{
 	margin-bottom: 0;
 }
 
-#msg-username-taken{
-	position: absolute;
-	left: 340px;
-	top: 13px;
+
+
+#msg-username-taken, #msg-post-short{
 	font-size: 13px;
-	color:
-	red;
+	color:red;
+	position: absolute;
 }
+
+#msg-username-taken{
+	left: 340px;
+	top: 13px;	
+}
+
+#msg-post-short{
+	left: 76px;
+	bottom: 4px;
+}
+
 
 #buttonClose_signup_popup_box{
 	position: absolute;
@@ -471,8 +483,8 @@ html, body {
 	top: 50%;
 	left: 50%;
 	width:500px;
-	height:370px;
-	margin-top: -185px; /*set to a negative number 1/2 of your height*/
+	height:384px;
+	margin-top: -192px; /*set to a negative number 1/2 of your height*/
 	margin-left: -250px; /*set to a negative number 1/2 of your width*/
 	border: 1px solid #ccc;
 	border:  2px solid black;
