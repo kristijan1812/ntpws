@@ -74,6 +74,13 @@ $(document).ready(function(){
         $('#popup_box_signup').fadeIn(200);
     });
 
+    $(".site-content").on('click', '.signup-to-vote', function(e){
+        e.preventDefault(); 
+        e.stopPropagation();   
+        $("#hider").fadeIn(200);
+        $('#popup_box_signup').fadeIn(200);
+    });
+    
     $("#buttonClose_signup_popup_box").on('click',function(e){
         e.preventDefault();   
         $("#hider").fadeOut(200);
@@ -311,9 +318,9 @@ $(document).ready(function(){
         $PostTitle_edit = $(this).parent().siblings(".post-header").find(".post-title").text();
         
         $(this).parent().siblings(".post-header").find(".post-title").hide();
-        $(this).parent().siblings(".post-header").append("<input type='text' name='PostTitle' id='PostTitle_edited' class='PostTitle' style='border:none;' placeholder='Edit Post Title' value='"+$PostTitle_edit+"' minlength=6 maxlength=30></input>");
+        $(this).parent().siblings(".post-header").append("<input type='text' name='PostTitle' id='PostTitle_edited' class='PostTitle' style='border:none;' placeholder='Edit Post Title' value='"+$PostTitle_edit+"' minlength=6 maxlength=100></input>");
 
-        $(this).parent().siblings(".post-text-paragraph").after("<textarea name='PostText' id='PostText_edited' class='PostText' style='background-color:transparent;margin-top:10px;width: 99%;padding:0;' placeholder='Edit content' minlength=300 maxlength=2000>"+$PostText_edit+"</textarea>");
+        $(this).parent().siblings(".post-text-paragraph").after("<textarea name='PostText' id='PostText_edited' class='PostText' style='background-color:transparent;margin-top:10px;width: 99%;padding:0;' placeholder='Edit content' minlength=300 maxlength=3000>"+$PostText_edit+"</textarea>");
         $(this).parent().siblings(".post-text-paragraph").hide();
         
         if($(this).parent('#EditPost').length == 0){

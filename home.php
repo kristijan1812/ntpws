@@ -34,9 +34,9 @@ function get_timeago($ptime)
 if (isset($_SESSION['UserId'])){ ?>
     <div id="submit-post-form" style="margin-bottom: 20px;">
         <form id="post-form">
-            <input type="text" name="PostTitle" id="PostTitle" class="PostTitle" placeholder="Write Post" minlength=6 maxlength=30></input>
+            <input type="text" name="PostTitle" id="PostTitle" class="PostTitle" placeholder="Write Post" minlength=6 maxlength=100></input>
             <div class="submit-container">
-                <textarea name="PostText" id="PostText" class="PostText" placeholder="Content" minlength=300 maxlength=2000></textarea>
+                <textarea name="PostText" id="PostText" class="PostText" placeholder="Content" minlength=300 maxlength=3000></textarea>
                 <input type="submit" class="Post-button" id="AddPost" value="POST"/>
             </div>
         </form>
@@ -124,8 +124,8 @@ else{ ?>
                     }
                 }                
                 else{
-                    ?><div class="vote-button " id="upvote"></div>
-                    <div class="vote-button " id="downvote"></div><?php
+                    ?><div class="vote-button signup-to-vote"></div>
+                    <div class="vote-button signup-to-vote"></div><?php
                 }
                 ?>
                 <span id="vote-status"><?php echo $like_status; ?></span>
