@@ -1,6 +1,7 @@
-.placeholder{
-	height:1000px;
+html, body {
+    height: 100%;
 }
+
 body {
 	background: #dde5e8;
 	font-size: 18px;
@@ -11,7 +12,6 @@ body {
 	padding: 0;
 	font-family: proxima-nova-1,proxima-nova-2,montserrat,Helvetica,sans-serif;
 }
-
 
 #button-back-to-top {
 	display: none;
@@ -27,11 +27,11 @@ body {
 	cursor: pointer;
 	padding: 15px;
 	border-radius: 4px;
-  }
+}
   
   #button-back-to-top:hover {
 	background-color: rgb(18, 221, 180);
-  }
+}
 
   #top-arrow{
 	width: 0; 
@@ -40,7 +40,7 @@ body {
 	border-right: 10px solid transparent;
 	border-bottom: 16px solid #4c5357;
 	display: inline-block;
-  }
+}
 
 .voting-area{
 	position: absolute;
@@ -58,18 +58,20 @@ body {
 	display:inline;
 	cursor: pointer;
 }
+
 .delete-button img{
 	max-height:25px;
 }
+
 .edit-button img{
 	max-height:20px;
 	margin-bottom: 3px;
-}
 }
 
 #vote-status{
 	margin-left:10px;
 }
+
 .vote-button {
 	cursor: pointer;
 	width: 0; 
@@ -79,13 +81,13 @@ body {
 	border-top: 10px solid #4c5357;
 	display: inline-block;
 	vertical-align: middle;
-  } 
+} 
  
-  .vote-button:first-of-type {
+.vote-button:first-of-type {
 	border-top: none;
 	border-bottom: 10px solid #4c5357;
-  } 
- 
+} 
+
 #page {
     position: relative;
     margin: 0 auto;
@@ -108,7 +110,6 @@ body {
 	max-height:50px;
 }
 
-
 .header-content nav{
 	list-style:none;
 	overflow:hidden;
@@ -116,6 +117,7 @@ body {
     padding:0;
     text-align:center;
 }
+
 .header-content nav img{
 	max-height:25px;
 	float:left;
@@ -123,6 +125,7 @@ body {
 	border-radius: 50%;
 	padding-right: 10px;
 }
+
 .header-content nav ul {
 	text-align: center;
 	list-style-type: none;
@@ -130,9 +133,11 @@ body {
 	padding: 0;
 	overflow: hidden;
 }
+
 .header-content nav li {
 	display: inline;
 }
+
 #homebtn {
 	display:inline-block;
 	text-align: center;
@@ -140,13 +145,13 @@ body {
 	text-decoration: none;
 	max-height:40px;
 	color: #4c5357;
-	
 }
 
 .header-content nav ul li:first-child a{
 	color:#1BBC9B;
 	float:left;
 }
+
 .header-content nav ul li:last-child .container{
 	float:right;
 	vertical-align:middle;
@@ -159,27 +164,29 @@ body {
 	bottom: 0;
 	left: 0;
 }
+
 footer p {
 	font-size:12px;
 	margin: 1em;
 	line-height: 1.4em;
 	letter-spacing: 1px;
 }
+
 footer img{
-	
 	max-height:25px;
 	float:right;
 	vertical-align: middle;
 	border-radius: 50%;
 	padding-left: 10px;
 }
+
 footer a{
 	float:right;
 	color: #4c5357;
 	padding-right: 10px;
 	text-decoration: none;
-	
 }
+
 .container {
   margin: 0 10px 0 0;
   line-height: 50px;
@@ -218,6 +225,7 @@ footer a{
   z-index:60;
   box-shadow: 0 4px 0 darken(#ddd, 5%);
 }
+
 #logout-button button{
 	padding: 8px 11px;
 }
@@ -225,7 +233,6 @@ footer a{
 #site-posts, #signup-outer-container{
 	width: 65%;
 	margin: 0 auto;
-	
 }
 
 .sort-button{
@@ -267,6 +274,7 @@ footer a{
 #sorting-buttons{
 	float:right;
 }
+
 #submit-post-form-notification{
 	margin: 0 auto 10px auto;
 	width:58.5%;
@@ -277,6 +285,7 @@ footer a{
 .submit-container{
 	display:none;
 }
+
 .PostTitle{
 	width: 80%;
 	margin: 0 auto 4px auto;
@@ -303,9 +312,7 @@ footer a{
 	line-height: 1.6;
 	resize: none;
 	position:relative;
-	
 }
-
 
 .Post-button{
 	padding: 8px 15px;
@@ -339,34 +346,37 @@ footer a{
 	position:relative;
 }
 
-
 .login-container.show-menu {
 	display:block;
 }
+
 .post-author, .post-title{
 	color:#f4f4f4;
 	margin: 0 auto;
 	line-height: 1;
 }
+
 .post-author{
 	float: right;
 }
+
 .post-title{
 	float: left;
 }
+
 .post-author a{
 	color:#f4f4f4;
 	text-decoration: none;
 }
+
 .post-header{
 	background-color: #1BBC9B;
 	min-height: 20px;
 	padding: 5px;
 	border: 2px solid #CCC;
 	border-radius: 8px;
-
-
 }
+
 #login-form, #signup-form{
   position: absolute;
   padding: 20px;
@@ -380,6 +390,7 @@ footer a{
 	margin:0;
 	width: 92%;
 }
+
 .input-data{
     width: 90%;
     padding: 8px;
@@ -389,19 +400,18 @@ footer a{
     background: #f4f4f4;
     font-weight: 300;
     font-style: italic;
-    border-radius: 2px;
-    
+    border-radius: 2px; 
 }
+
 #signup-form .input-data{
 	width:62%;
 	display:block;
 	margin-bottom:10px;
 }
+
 #signup-form .input-data:last-child{
 	margin-bottom: 0;
 }
-
-
 
 #msg-username-taken, #msg-post-short, #msg-edit-short{
 	font-size: 13px;
@@ -423,7 +433,6 @@ footer a{
 	left: 76px;
 	bottom: 4px;
 }
-
 
 #buttonClose_signup_popup_box{
 	position: absolute;
@@ -447,12 +456,9 @@ footer a{
 	font-style: normal;
 	box-shadow: 0 4px 0 darken(#1BBC9B, 5%);
 }
+
 #signup-form input[type="submit"]{
 	width: 32%;
-}
-
-html, body {
-    height: 100%;
 }
 
 #login-error{
@@ -464,20 +470,14 @@ html, body {
 	font-weight:300;
 }
 
-
 #hider{
 	position:fixed;
     padding:0;
     margin:0;
-
     top:0;
     left:0;
-
     width: 100%;
     height: 100%;
-	/*
-	z- index must be lower than pop up box
-	*/
 	z-index: 99;
 	background-color:Black;
 	opacity:0.5;
@@ -489,16 +489,16 @@ html, body {
 	left: 50%;
 	width:500px;
 	height:384px;
-	margin-top: -192px; /*set to a negative number 1/2 of your height*/
-	margin-left: -250px; /*set to a negative number 1/2 of your width*/
+	margin-top: -192px;
+	margin-left: -250px;
 	border: 1px solid #ccc;
 	border:  2px solid black;
 	border-radius: 5px;
 	background-color:#ddd;
 	opacity:0.9;
 	z-index:100; 
-
 }
+
 #recaptcha-div{
 	padding-bottom: 8px;
 }
@@ -532,5 +532,4 @@ html, body {
     left: 340px;
 	top: 100px;
 	font-size: 13px;
-
 }

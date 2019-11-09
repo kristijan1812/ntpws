@@ -1,9 +1,6 @@
 <?php
-
 include("dblayer.php");
-
 global $DBCON;
-
 mysqli_query($DBCON, 'INSERT INTO posts (PostText, UserId, PostDate,PostTitle) VALUES ("'.$_POST['PostText'].'",'.$_SESSION["UserId"].',CURRENT_TIMESTAMP,"'.$_POST['PostTitle'].'")');
 $postId = mysqli_insert_id($DBCON);
 if (isset($_SESSION['UserId'])){

@@ -1,3 +1,4 @@
+//GENERAL AJAX TEMPLATE
 window.Ajax = function(type, url, datatype, data = null)
 {
     return new Promise(function(resolve,reject){
@@ -13,20 +14,19 @@ window.Ajax = function(type, url, datatype, data = null)
                 reject(result);
             }
         });
-
-    });
-    
+    });  
 }
 
+//CAPTCHA
 var onloadCallback = function() {
     grecaptcha.render('recaptcha-div', {
       'sitekey' : '6LdKBcEUAAAAAAqA2Zm2J2BsEcWKDum0Y7jSSr0a'
     });
   };
 
-
 $(document).ready(function(){
-          
+
+    //VISIBILITY DESIGN FUNCTIONS     
     $(window).click(function() {
         $(".login-container").hide();
         $(".submit-container").hide();
@@ -39,41 +39,41 @@ $(document).ready(function(){
         $("#msg-password-match").text('');
         $('#msg-username-taken').text('');
         $('#recaptcha-error').css("visibility", "hidden");
-        $("#msg-post-short").css("visibility", "hidden");
-       
-    })
+        $("#msg-post-short").css("visibility", "hidden"); 
+    });
+
     $('#popup_box_signup').on('click',function(e){
         e.stopPropagation();
-    })
+    });
 
     $(".login-container").on('click',function(e){
         e.stopPropagation();
-    })
+    });
 
     $('.site-content').on('click', '.submit-container', function(e){
         e.stopPropagation();
-    })
+    });
 
     $("#login-button").on('click',function(e){
         e.stopPropagation();
         e.preventDefault();    
         $(".login-container").show();
-    })
+    });
 
     $('.site-content').on('click', '#PostTitle', function(e){
         e.stopPropagation();
         e.preventDefault();    
         $(".submit-container").show();
         $(this).attr('placeholder', 'Post title');
-    })
+    });
     
-
     $("#signup-button").on('click',function(e){
         e.preventDefault(); 
         e.stopPropagation();   
         $("#hider").fadeIn(200);
         $('#popup_box_signup').fadeIn(200);
-    })
+    });
+
     $("#buttonClose_signup_popup_box").on('click',function(e){
         e.preventDefault();   
         $("#hider").fadeOut(200);
@@ -84,17 +84,41 @@ $(document).ready(function(){
         $("#msg-password-match").text('');
         $('#msg-username-taken').text('');
         $('#recaptcha-error').css("visibility", "hidden");
-    })
+    });
     
     $("#confirm-password").keyup(function(){
         $('#recaptcha-error').css("visibility", "hidden");
         if ($("#signup-password").val() != $("#confirm-password").val()) {
             $("#msg-password-match").html("Passwords don't match!").css("color","red");
-        }else{
+        }
+        else{
             $("#msg-password-match").html("Passwords match!").css("color","green");
        }
     });
 
+    // DISABLE USERNAME AND PASSWORDS WITH SPACES
+    $('input.nospace').on('keydown', function(e) {
+        if (e.keyCode == 32) {
+            return false;
+        }
+    });
+
+    //BACK TO TOP
+    $('#page').scroll(function() {
+        if ($('#page').scrollTop() > 2000) {
+            $('#button-back-to-top').fadeIn(300);
+        } 
+        else {
+            $('#button-back-to-top').fadeOut(300);
+        }
+    });
+
+    $('#button-back-to-top').on('click', function(e) {
+        e.preventDefault();
+        $('#page').animate({scrollTop:0}, '300');
+    });
+
+    //SIGNUP BUTTON
     $('#signup-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
         var captcha_response = grecaptcha.getResponse();
@@ -104,59 +128,53 @@ $(document).ready(function(){
         else if(captcha_response.length == 0){
             $('#recaptcha-error').html("The captcha verification failed. Please try again.").css("visibility", "visible");
         }
-       else{
-        $('#recaptcha-error').css("visibility", "hidden");
-        if ($(this).siblings("#confirm-password").val() == $(this).siblings("#signup-password").val()){
-            var data = { 
-                "Username": $("#signup-username").val(),
-                "Password": $("#signup-password").val()
-            }
-            // SIGNUP
-            Ajax("POST", "signup.php", "text", data)
-            .then(function(result){
-                if(result == 'taken'){
-                    $("#msg-username-taken").css("visibility", "visible");
-                }
-                else{
-                    //THEN LOGIN
-                    Ajax("POST", "login.php", "json", data)
-                    .then(function(result){
-                        $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
-                        $(".logout-button").toggleClass("show-menu");
-                        $(".site-content").load("home.php");
-                    })
-                    .catch(function(error){
-                        console.log(error);
-                        $('#login-form #login-error').show();
-                    });
-                    $("#hider").hide();
-                    $("#popup_box_signup").hide();
-                }
-                
-            })
-            .catch(function(error){
-                console.log(error);
-                return false;
-            });
-            
-            
-
-        
-        }
         else{
-            $('#recaptcha-error').html("Passwords don't match!").css("visibility", "visible");
-        }
+            $('#recaptcha-error').css("visibility", "hidden");
+            if ($(this).siblings("#confirm-password").val() == $(this).siblings("#signup-password").val()){
+                var data = { 
+                    "Username": $("#signup-username").val(),
+                    "Password": $("#signup-password").val()
+                }
+                //SIGNUP
+                Ajax("POST", "signup.php", "text", data)
+                .then(function(result){
+                    if(result == 'taken'){
+                        $("#msg-username-taken").css("visibility", "visible");
+                    }
+                    else{
+                        //THEN LOGIN
+                        Ajax("POST", "login.php", "json", data)
+                        .then(function(result){
+                            $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
+                            $(".logout-button").toggleClass("show-menu");
+                            $(".site-content").load("home.php");
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                            $('#login-form #login-error').show();
+                        });
+                        $("#hider").hide();
+                        $("#popup_box_signup").hide();
+                    }   
+                })
+                .catch(function(error){
+                    console.log(error);
+                    return false;
+                });
+            }
+            else{
+                $('#recaptcha-error').html("Passwords don't match!").css("visibility", "visible");
+            }
        }
-    })
+    });
     
+    //LOGIN BUTTON
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
         var data = { 
             "Username": $("#login-username").val(),
             "Password": $("#login-password").val()
         }
-
-
         Ajax("POST", "login.php", "json", data)
         .then(function(result){
             $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
@@ -167,11 +185,9 @@ $(document).ready(function(){
             console.log(error);
             $('#login-form #login-error').show();
         });
-        
+    });
 
-    })
-
-
+    //ADD POST BUTTON
     $('.site-content').on('click', '#AddPost', function(e){
         e.preventDefault();
         if($("#PostTitle").val().length < 6 && $("#PostText").val().length < 300){
@@ -188,7 +204,6 @@ $(document).ready(function(){
                 "PostText" : $("#PostText").val(),
                 "PostTitle": $("#PostTitle").val()
             }
-            
             Ajax("POST", "addPost.php", "html", data)
             .then(function(result){
                 $("#site-posts").prepend(result);
@@ -202,8 +217,9 @@ $(document).ready(function(){
             $("#PostText").val('');
             $("#msg-post-short").css("visibility", "hidden");
         }  
-    })
+    });
 
+    //UPVOTE BUTTON
     $('.site-content').on('click', '#upvote', function(e){
         e.preventDefault();
         $id_from_this_post = parseInt($(this).parent().parent().attr("postid"))
@@ -230,13 +246,13 @@ $(document).ready(function(){
                 $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#upvote").css("border-bottom-color", "#1BBC9B");
                 $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#downvote").css("border-top-color", "#4c5357");
             }
-           
         })
         .catch(function(error){
             console.log(error);
         });
-    })
+    });
 
+    //DOWNVOTE BUTTON
     $('.site-content').on('click', '#downvote', function(e){
         e.preventDefault();
         $id_from_this_post = parseInt($(this).parent().parent().attr("postid"))
@@ -263,13 +279,13 @@ $(document).ready(function(){
                 $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#downvote").css("border-top-color", "#1BBC9B");
                 $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#upvote").css("border-bottom-color", "#4c5357");
             }
-           
         })
         .catch(function(error){
             console.log(error);
         });
-    })
+    });
    
+    //DELETE POST BUTTON
     $('.site-content').on('click', '.delete-button', function(e){
         e.preventDefault();
         var confirmation = confirm("Are you sure you want to remove this post?");
@@ -286,7 +302,9 @@ $(document).ready(function(){
                 console.log(error);
             });
         }
-    })
+    });
+
+    //EDIT POST BUTTON
     $('.site-content').on('click', '.edit-button', function(e){
         e.preventDefault();
         $PostText_edit = $(this).parent().siblings(".post-text-paragraph").text();
@@ -305,12 +323,11 @@ $(document).ready(function(){
             $(this).parent().siblings(".Post-button").after("<input type='submit' class='Post-button' style='display:inline;' id='CancelEditPost' value='CANCEL'/><p id='msg-edit-short' style='visibility:hidden;'></p>");
         }
         $(this).prop('disabled', true);
-    })
+    });
 
+    //CANCEL EDIT POST BUTTON
     $('.site-content').on('click', '#CancelEditPost', function(e){
         e.preventDefault();
-        
-        
         $(this).siblings(".post-header").find(".post-title").show();
         $(this).siblings(".post-header").find("#PostTitle_edited").remove();
         $(this).siblings(".post-text-paragraph").show();
@@ -319,9 +336,9 @@ $(document).ready(function(){
         $(this).siblings('.post-edit-area').children(".edit-button").prop('disabled', false);
         $(this).siblings('#msg-edit-short').remove();
         $(this).remove();
-        
-    })
+    });
 
+    //SUBMIT EDIT POST BUTTON
     $('.site-content').on('click', '#EditPost', function(e){
         e.preventDefault();
         if($("#PostTitle_edited").val().length < 6 && $("#PostText_edited").val().length < 300){
@@ -341,7 +358,6 @@ $(document).ready(function(){
                 "NewText" : $(this).siblings("#PostText_edited").val(),
                 "PostAuthor" : $(this).siblings(".post-header").children(".post-author").children("a").text(),
                 "PostLikes" : $(this).siblings(".voting-area").children("#vote-status").text()
-
             }
             Ajax("POST", "editPost.php", "html", data)
             .then(function(result){
@@ -350,30 +366,10 @@ $(document).ready(function(){
             .catch(function(error){
                 console.log(error);
             });
-        }
-        
-    })
-
-    $('#page').scroll(function() {
-        if ($('#page').scrollTop() > 2000) {
-        $('#button-back-to-top').fadeIn(300);
-        } else {
-        $('#button-back-to-top').fadeOut(300);
-        }
+        }  
     });
 
-    $('#button-back-to-top').on('click', function(e) {
-        e.preventDefault();
-        $('#page').animate({scrollTop:0}, '300');
-    });
-
-
-    $('input.nospace').on('keydown', function(e) {
-	if (e.keyCode == 32) {
-		return false;
-    }
-    });
-    
+    //SORTING FUNCTIONS
     $('.site-content').on('click', '#sort-by-popularity',function(e) {
         e.preventDefault();
         Ajax("GET", "home.php", "html", {"Sort":"Popularity"})
@@ -382,8 +378,7 @@ $(document).ready(function(){
         })
         .catch(function(error){
             console.log(error);
-        });
-        
+        });   
     });
 
     $('.site-content').on('click', '#sort-by-date-old', function(e) {
@@ -395,8 +390,8 @@ $(document).ready(function(){
         .catch(function(error){
             console.log(error);
         });
-        
     });
+
     $('.site-content').on('click', '#sort-by-date-new', function(e) {
         e.preventDefault();
         Ajax("GET", "home.php", "html", {"Sort":"Newest"})
@@ -405,9 +400,7 @@ $(document).ready(function(){
         })
         .catch(function(error){
             console.log(error);
-        });
-        
-    });
-    
+        }); 
+    }); 
 });
 

@@ -1,17 +1,10 @@
 <?php
-
 include("dblayer.php");
-
 global $DBCON;
 
 $username = $_POST['Username'];
 $password = $_POST['Password'];
-
-
-
-
 $results = mysqli_query($DBCON, 'SELECT * FROM `users` WHERE UserName = "'.$username.'"');
-
 if (mysqli_num_rows($results) > 0) {
     echo "taken";	
 }
@@ -20,5 +13,3 @@ else{
     echo "not_taken";
     
 }
-
-

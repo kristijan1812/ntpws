@@ -1,13 +1,8 @@
 <?php
-
 include("dblayer.php");
-
 global $DBCON;
-
 mysqli_query($DBCON, 'UPDATE posts SET PostTitle="'.$_POST['NewTitle'].'", PostText="'.$_POST['NewText'].'" WHERE PostId='.$_POST['PostId'].'');
-
 ?>
-
 
 <div class="post-header">
     <p class="post-title"><?php echo $_POST['NewTitle']; ?></p>

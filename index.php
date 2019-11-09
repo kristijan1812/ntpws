@@ -12,7 +12,6 @@ global $DBCON;
 
 <head>
 	<meta charset="utf-8">
-
 	<title>RecordView</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta name="description" content="Write your oppinion on the latest records.">
@@ -45,7 +44,6 @@ global $DBCON;
 			<p id="recaptcha-error" style="visibility:hidden;"></p>
 			<input class ="input-data" type="submit" value="SUBMIT" />
 		</form>
-		
 		<a id="buttonClose_signup_popup_box">X</a>
 	</div>
 	<div id="page">
@@ -65,7 +63,6 @@ global $DBCON;
 								<?php
 								} else {
 									?>
-									
 									<button class="header-button" id="login-button">log in</button>
 									<button class="header-button" id="signup-button" >sign up</button>
 									<div class="login-container">
@@ -79,10 +76,8 @@ global $DBCON;
 								<?php
 								}
 								?>
-
 							</div>
 						</li>
-							
 					</ul>
 				</nav>
 			</div>
