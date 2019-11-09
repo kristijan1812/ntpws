@@ -34,8 +34,7 @@ function get_timeago($ptime)
     }
 }
 
-?>
-<?php
+
 if (isset($_SESSION['UserId'])){ ?>
     <div id="submit-post-form" style="margin-bottom: 20px;">
         <form id="post-form">
@@ -53,35 +52,49 @@ else{ ?>
 <div id="submit-post-form-notification">You must be logged in to submit a post.</div>
 <?php } ?>
 
-
 <div id="sort-section">
     <div id="sorting-buttons">
     Sort by:
-    <button class="sort-button-highlighted " class="sort-button" id="sort-by-date" >Newest</button><button class="sort-button" id="sort-by-date">Oldest</button><button class="sort-button" id="sort-by-popularity">Most popular</button>
+    <button class="sort-button <?php if ((isset($_GET['Sort']) && $_GET['Sort'] == "Newest") || !isset($_GET['Sort'])){echo "sort-button-highlighted";}?>" id="sort-by-date-new" >Newest</button>
+    <button class="sort-button <?php if ((isset($_GET['Sort']) && $_GET['Sort'] == "Oldest")){echo "sort-button-highlighted";}?>" id="sort-by-date-old">Oldest</button>
+    <button class="sort-button <?php if ((isset($_GET['Sort']) && $_GET['Sort'] == "Popularity")){echo "sort-button-highlighted";}?>" id="sort-by-popularity">Most popular</button>
     </div>
 </div>
 <div id="site-posts">
     <?php
-    $qry = mysqli_query($DBCON, "SELECT posts.*, users.UserName FROM posts INNER JOIN users ON posts.UserId = users.UserId ORDER BY PostDate DESC");
-    if (isset($_SESSION['UserId'])){
-        $qry_likes = mysqli_query($DBCON, "SELECT PostId FROM likes WHERE likes.UserId=".$_SESSION['UserId']."");
-        $qry_likes_rows = [];
-        while($row = mysqli_fetch_array($qry_likes))
-        {
-            $qry_likes_rows[] = $row['PostId'];
+    if (isset($_GET['Sort'])){
+        if($_GET['Sort'] == "Newest"){
+            $query_content = "SELECT posts.*, users.UserName FROM posts INNER JOIN users ON posts.UserId = users.UserId ORDER BY PostDate DESC";
+        }
+        elseif($_GET['Sort'] == "Oldest"){
+            $query_content = "SELECT posts.*, users.UserName FROM posts INNER JOIN users ON posts.UserId = users.UserId ORDER BY PostDate ASC";
+        }
+        elseif($_GET['Sort'] == "Popularity"){
+            $query_content = "SELECT 
+            CASE WHEN SumLikes IS NULL THEN 0
+            ELSE SumLikes END AS SumLikesF,
+            posts.*, users.UserName 
+            FROM `posts` 
+            LEFT JOIN (SELECT likes.PostId, SUM(LikeValue) AS SumLikes FROM `likes` GROUP BY PostId) `likes` 
+            ON likes.PostId = posts.PostId
+            INNER JOIN `users`
+            On users.UserId = posts.UserId
+            ORDER BY SumLikesF DESC";
         }
     }
+    else{
+        $query_content = "SELECT posts.*, users.UserName FROM posts INNER JOIN users ON posts.UserId = users.UserId ORDER BY PostDate DESC";
+    }
+    
+    $qry = mysqli_query($DBCON, $query_content);
     
     
     while($post = mysqli_fetch_array($qry))
     {  
         $timeago=get_timeago(strtotime($post['PostDate']));
-        $post_qry = mysqli_query($DBCON, "SELECT likes.Value FROM `likes` WHERE PostId=".$post['PostId']."" );
-        $like_status = 0;
-        while($like = mysqli_fetch_array($post_qry))
-        {
-            $like_status += $like['Value'];
-        }
+        $post_qry = mysqli_query($DBCON, "SELECT likes.PostId, SUM(LikeValue) AS SumLikes FROM `likes` WHERE PostId = ".$post['PostId']." GROUP BY PostId");
+        $like_status = (mysqli_num_rows($post_qry)==0) ? 0 : mysqli_fetch_assoc($post_qry)['SumLikes'];
+        
         ?>
         <div class="post" postid="<?php echo $post['PostId']; ?>">
             <div class="post-header">
@@ -102,15 +115,33 @@ else{ ?>
                 
                 ?>
             </div>
-            <div class="voting-area"><?php 
-                if (isset($_SESSION['UserId']) && in_array($post['PostId'], $qry_likes_rows)){ ?> 
-                    <div class="vote-button upvote" style="border-top-color: red;"></div>
-                    <div class="vote-button downvote" style="border-bottom-color: red;"></div><?php
-                
+            <div class="voting-area"><?php
+
+                if (isset($_SESSION['UserId'])){
+                    $qry_likes = mysqli_query($DBCON, "SELECT LikeValue FROM likes WHERE likes.UserId=".$_SESSION['UserId']." AND likes.PostId=".$post['PostId']."");
+                    $qry_likes_rows = mysqli_num_rows($qry_likes);
+                    if ($qry_likes_rows > 0){
+                        $usr_like = mysqli_fetch_assoc($qry_likes)['LikeValue'];
+                        if($usr_like==1){
+                            ?><div class="vote-button " id="upvote" style="border-bottom-color: #1BBC9B;"></div>
+                            <div class="vote-button " id="downvote"></div><?php
+                        }
+                        else{
+                            ?><div class="vote-button " id="upvote"></div>
+                            <div class="vote-button " id="downvote" style="border-top-color: #1BBC9B;"></div><?php
+                        }
+                        
+                    }
+                    else{
+                        ?><div class="vote-button " id="upvote"></div>
+                        <div class="vote-button " id="downvote"></div><?php
+                    }
+            
                 }
+                                
                 else{
-                    ?><div class="vote-button upvote"></div>
-                    <div class="vote-button downvote"></div><?php
+                    ?><div class="vote-button " id="upvote"></div>
+                    <div class="vote-button " id="downvote"></div><?php
                 }
                 ?>
                 

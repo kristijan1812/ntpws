@@ -27,13 +27,18 @@ global $DBCON;
 </head>
 
 <body>
+	<input type="hidden" value="<?php
+			if(isset($_SESSION['UserId'])){
+				echo $_SESSION['UserId'];
+			} 
+	?>" id="session">
 	<div id="hider" style="display:none;"></div>
 	<div id="popup_box_signup" style="display:none;">
 		<div id="website-logo-signup"><img src="media/images/disc-vinyl-icon.png" alt="RecordView" />RecordView - Sign up</div>
 		<form id="signup-form">
-			<input class ="input-data" id="signup-username" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" />
-			<input class ="input-data" id="signup-password" type="password" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" />
-			<input class ="input-data" id="confirm-password" type="password" minlength=4 maxlength=15 placeholder="Confirm Password" />
+			<input class ="input-data nospace" id="signup-username" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" />
+			<input class ="input-data nospace" id="signup-password" type="password" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" />
+			<input class ="input-data nospace" id="confirm-password" type="password" minlength=4 maxlength=15 placeholder="Confirm Password" />
 			<p id="msg-username-taken" style="visibility:hidden;">Username already taken!</p>
 			<p id="msg-password-match"></p>
 			<div id="recaptcha-div"></div>
@@ -65,8 +70,8 @@ global $DBCON;
 									<button class="header-button" id="signup-button" >sign up</button>
 									<div class="login-container">
 										<form id="login-form">
-											<input class ="input-data" id="login-username" type="text" placeholder="Username" />
-											<input class ="input-data" id="login-password" type="password" placeholder="Password" />
+											<input class ="input-data nospace" id="login-username" type="text" placeholder="Username" />
+											<input class ="input-data nospace" id="login-password" type="password" placeholder="Password" />
 											<input class ="input-data" type="submit" value="SUBMIT" />
 											<p id="login-error">Wrong username or password.</p>
 										</form>

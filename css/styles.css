@@ -76,14 +76,14 @@ body {
 	height: 0; 
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
-	border-bottom: 10px solid #4c5357;
+	border-top: 10px solid #4c5357;
 	display: inline-block;
 	vertical-align: middle;
   } 
  
   .vote-button:first-of-type {
-	border-bottom: none;
-	border-top: 10px solid #4c5357;
+	border-top: none;
+	border-bottom: 10px solid #4c5357;
   } 
  
 #page {
@@ -403,10 +403,15 @@ footer a{
 
 
 
-#msg-username-taken, #msg-post-short{
+#msg-username-taken, #msg-post-short, #msg-edit-short{
 	font-size: 13px;
 	color:red;
 	position: absolute;
+}
+
+#msg-edit-short{
+	left: 180px;
+	bottom: 50px;	
 }
 
 #msg-username-taken{

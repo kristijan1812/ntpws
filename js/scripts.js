@@ -40,6 +40,7 @@ $(document).ready(function(){
         $('#msg-username-taken').text('');
         $('#recaptcha-error').css("visibility", "hidden");
         $("#msg-post-short").css("visibility", "hidden");
+       
     })
     $('#popup_box_signup').on('click',function(e){
         e.stopPropagation();
@@ -150,7 +151,6 @@ $(document).ready(function(){
     
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
-        //TODO: exception if empty
         var data = { 
             "Username": $("#login-username").val(),
             "Password": $("#login-password").val()
@@ -174,14 +174,14 @@ $(document).ready(function(){
 
     $('.site-content').on('click', '#AddPost', function(e){
         e.preventDefault();
-        if($("#PostTitle").val().length < 6 || $("#PostText").val().length < 300){
+        if($("#PostTitle").val().length < 6 && $("#PostText").val().length < 300){
             $("#msg-post-short").html("The post title (min. 6 characters) and post content (min. 300) characters are too short!").css("visibility", "visible");
         }
         else if($("#PostTitle").val().length < 6){
             $("#msg-post-short").html("The post title (min. 6 characters) is too short!").css("visibility", "visible");
         }
         else if($("#PostText").val().length < 300){
-            $("#msg-post-short").html("The post content (min. 6 characters) is too short!").css("visibility", "visible");
+            $("#msg-post-short").html("The post content (min. 300 characters) is too short!").css("visibility", "visible");
         }
         else{
             data = {
@@ -200,22 +200,76 @@ $(document).ready(function(){
             $("#PostTitle").attr('placeholder', 'Write Post');
             $("#PostTitle").val('');
             $("#PostText").val('');
+            $("#msg-post-short").css("visibility", "hidden");
         }  
     })
 
-    $('.site-content').on('click', '.upvote', function(e){
+    $('.site-content').on('click', '#upvote', function(e){
         e.preventDefault();
-
-        
-        Ajax("POST", "voting.php", "html", {"Upvote":1});
-        // .then(function(result){
-        //     $("#vote-status").html(result);
-        // })
-        // .catch(function(error){
-        //     console.log(error);
-        // });
+        $id_from_this_post = parseInt($(this).parent().parent().attr("postid"))
+        $current_vote_status = parseInt($(this).siblings("#vote-status").text());
+        data = {
+            "PostId" : $id_from_this_post,
+            "UserId": parseInt($("#session").attr("value")),
+            "Vote": parseInt(1),
+            "Current": $current_vote_status
+        }
+        Ajax("POST", "voting.php", "text", data)
+        .then(function(result){
+            if(result=="exists"){
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#vote-status").text(String($current_vote_status-1))
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#upvote").css("border-bottom-color", "#4c5357");
+            }
+            else if(result=="counter"){
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#vote-status").text(String($current_vote_status+2))
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#upvote").css("border-bottom-color", "#1BBC9B");
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#downvote").css("border-top-color", "#4c5357");
+            }
+            else{
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#vote-status").text(String($current_vote_status+1))
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#upvote").css("border-bottom-color", "#1BBC9B");
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#downvote").css("border-top-color", "#4c5357");
+            }
+           
+        })
+        .catch(function(error){
+            console.log(error);
+        });
     })
 
+    $('.site-content').on('click', '#downvote', function(e){
+        e.preventDefault();
+        $id_from_this_post = parseInt($(this).parent().parent().attr("postid"))
+        $current_vote_status = parseInt($(this).siblings("#vote-status").text());
+        data = {
+            "PostId" : $id_from_this_post,
+            "UserId": parseInt($("#session").attr("value")),
+            "Vote": parseInt(-1),
+            "Current": $current_vote_status
+        }
+        Ajax("POST", "voting.php", "text", data)
+        .then(function(result){
+            if(result=="exists"){
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#vote-status").text(String($current_vote_status+1))
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#downvote").css("border-top-color", "#4c5357");
+            }
+            else if(result=="counter"){
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#vote-status").text(String($current_vote_status-2))
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#downvote").css("border-top-color", "#1BBC9B");
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#upvote").css("border-bottom-color", "#4c5357");
+            }
+            else{
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#vote-status").text(String($current_vote_status-1))
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#downvote").css("border-top-color", "#1BBC9B");
+                $(".post[postid='"+String($id_from_this_post)+"']").children(".voting-area").children("#upvote").css("border-bottom-color", "#4c5357");
+            }
+           
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+    })
+   
     $('.site-content').on('click', '.delete-button', function(e){
         e.preventDefault();
         var confirmation = confirm("Are you sure you want to remove this post?");
@@ -239,16 +293,16 @@ $(document).ready(function(){
         $PostTitle_edit = $(this).parent().siblings(".post-header").find(".post-title").text();
         
         $(this).parent().siblings(".post-header").find(".post-title").hide();
-        $(this).parent().siblings(".post-header").append("<input type='text' name='PostTitle' id='PostTitle_edited' class='PostTitle' style='border:none;' placeholder='Edit Post Title' value='"+$PostTitle_edit+"'></input>");
+        $(this).parent().siblings(".post-header").append("<input type='text' name='PostTitle' id='PostTitle_edited' class='PostTitle' style='border:none;' placeholder='Edit Post Title' value='"+$PostTitle_edit+"' minlength=6 maxlength=30></input>");
 
-        $(this).parent().siblings(".post-text-paragraph").after("<textarea name='PostText' id='PostText_edited' class='PostText' style='background-color:transparent;margin-top:10px;width: 99%;padding:0;' placeholder='Edit content'>"+$PostText_edit+"</textarea>");
+        $(this).parent().siblings(".post-text-paragraph").after("<textarea name='PostText' id='PostText_edited' class='PostText' style='background-color:transparent;margin-top:10px;width: 99%;padding:0;' placeholder='Edit content' minlength=300 maxlength=2000>"+$PostText_edit+"</textarea>");
         $(this).parent().siblings(".post-text-paragraph").hide();
         
         if($(this).parent('#EditPost').length == 0){
             $(this).parent().siblings(".PostText").after("<input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='EditPost' value='POST'/>");
         }
         if($(this).parent('#CancelEditPost').length == 0){
-            $(this).parent().siblings(".Post-button").after("<input type='submit' class='Post-button' style='display:inline;' id='CancelEditPost' value='CANCEL'/>");
+            $(this).parent().siblings(".Post-button").after("<input type='submit' class='Post-button' style='display:inline;' id='CancelEditPost' value='CANCEL'/><p id='msg-edit-short' style='visibility:hidden;'></p>");
         }
         $(this).prop('disabled', true);
     })
@@ -263,28 +317,40 @@ $(document).ready(function(){
         $(this).siblings("#PostText_edited").remove();
         $(this).siblings("#EditPost").remove();
         $(this).siblings('.post-edit-area').children(".edit-button").prop('disabled', false);
+        $(this).siblings('#msg-edit-short').remove();
         $(this).remove();
         
     })
 
     $('.site-content').on('click', '#EditPost', function(e){
         e.preventDefault();
-        $id_from_this_post = $(this).parents(".post").attr("postid");
-        var data = {
-            "PostId" : $id_from_this_post,
-            "NewTitle" : $(this).siblings(".post-header").children("#PostTitle_edited").val(),
-            "NewText" : $(this).siblings("#PostText_edited").val(),
-            "PostAuthor" : $(this).siblings(".post-header").children(".post-author").children("a").text(),
-            "PostLikes" : $(this).siblings(".voting-area").children("#vote-status").text()
-
+        if($("#PostTitle_edited").val().length < 6 && $("#PostText_edited").val().length < 300){
+            $("#msg-edit-short").html("The post title (min. 6 characters) and post content (min. 300) characters are too short!").css("visibility", "visible");
         }
-        Ajax("POST", "editPost.php", "html", data)
-        .then(function(result){
-            $(".post[postid='" + $id_from_this_post + "']").html(result);
-        })
-        .catch(function(error){
-            console.log(error);
-        });
+        else if($("#PostTitle_edited").val().length < 6){
+            $("#msg-edit-short").html("The post title (min. 6 characters) is too short!").css("visibility", "visible");
+        }
+        else if($("#PostText_edited").val().length < 300){
+            $("#msg-edit-short").html("The post content (min. 300 characters) is too short!").css("visibility", "visible");
+        }
+        else{
+            $id_from_this_post = $(this).parents(".post").attr("postid");
+            var data = {
+                "PostId" : $id_from_this_post,
+                "NewTitle" : $(this).siblings(".post-header").children("#PostTitle_edited").val(),
+                "NewText" : $(this).siblings("#PostText_edited").val(),
+                "PostAuthor" : $(this).siblings(".post-header").children(".post-author").children("a").text(),
+                "PostLikes" : $(this).siblings(".voting-area").children("#vote-status").text()
+
+            }
+            Ajax("POST", "editPost.php", "html", data)
+            .then(function(result){
+                $(".post[postid='" + $id_from_this_post + "']").html(result);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }
         
     })
 
@@ -301,4 +367,47 @@ $(document).ready(function(){
         $('#page').animate({scrollTop:0}, '300');
     });
 
-})
+
+    $('input.nospace').on('keydown', function(e) {
+	if (e.keyCode == 32) {
+		return false;
+    }
+    });
+    
+    $('.site-content').on('click', '#sort-by-popularity',function(e) {
+        e.preventDefault();
+        Ajax("GET", "home.php", "html", {"Sort":"Popularity"})
+        .then(function(result){
+            $(".site-content").html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+        
+    });
+
+    $('.site-content').on('click', '#sort-by-date-old', function(e) {
+        e.preventDefault();
+        Ajax("GET", "home.php", "html", {"Sort":"Oldest"})
+        .then(function(result){
+            $(".site-content").html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+        
+    });
+    $('.site-content').on('click', '#sort-by-date-new', function(e) {
+        e.preventDefault();
+        Ajax("GET", "home.php", "html", {"Sort":"Newest"})
+        .then(function(result){
+            $(".site-content").html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+        
+    });
+    
+});
+
