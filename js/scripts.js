@@ -46,7 +46,7 @@ $(document).ready(function(){
         e.stopPropagation();
     });
 
-    $(".login-container").on('click',function(e){
+    $("#login-form").on('click',function(e){
         e.stopPropagation();
     });
 
