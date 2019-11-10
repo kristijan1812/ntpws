@@ -201,6 +201,7 @@ $(document).ready(function(){
             $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
             $(".logout-button").toggleClass("show-menu");
             $(".site-content").load("home.php");
+            $("#session").attr("value", result.UserId);
         })
         .catch(function(error){
             console.log(error);

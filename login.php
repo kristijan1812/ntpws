@@ -11,7 +11,7 @@ $rows = mysqli_num_rows($login_data);
 $row = mysqli_fetch_array($login_data);
 
 if ($rows > 0){
-    echo '{ "Result": "Logged in", "Username": "'.$username.'"}';
+    echo '{ "Result": "Logged in", "Username": "'.$username.'", "UserId": "'.$row['UserId'].'"}';
     $_SESSION['UserName'] = $username;
     $_SESSION['UserId'] = $row['UserId'];
 }

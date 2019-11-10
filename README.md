@@ -9,7 +9,4 @@ Projekt: Kristijan Antolić
 3. Open index.php on localhost
 
 
-TODO:
-* LAJKOVI POPRAVAK - kad se ulogira ne radi
-* POPUNI I EXPORTAJ BAZU NA NOVO I ČISTO
 
