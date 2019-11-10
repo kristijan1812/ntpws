@@ -10,6 +10,6 @@ Projekt: Kristijan Antolić
 
 
 TODO:
-* LAJKOVI POPRAVAK
-* POPUNI BAZU NA NOVO I ČISTO
+* LAJKOVI POPRAVAK - kad se ulogira ne radi
+* POPUNI I EXPORTAJ BAZU NA NOVO I ČISTO
 

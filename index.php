@@ -44,6 +44,10 @@ global $DBCON;
 			<p id="recaptcha-error" style="visibility:hidden;"></p>
 			<input class ="input-data" type="submit" value="SUBMIT" />
 		</form>
+		<div id="to-login">
+			<p style="display: inline;">Have an account?</p>
+			<button class ="header-button" type="redirect" style="margin: 0px 0px 0px 8px;">LOG IN</button>
+		</div>
 		<a id="buttonClose_signup_popup_box">X</a>
 	</div>
 	<div id="page">

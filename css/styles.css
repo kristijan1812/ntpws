@@ -483,13 +483,19 @@ footer a{
 	opacity:0.5;
 }
 
+#to-login{
+	position: absolute;
+	bottom: 17px;
+    right: 18px;
+}
+
 #popup_box_signup  {
 	position:absolute;
 	top: 50%;
 	left: 50%;
 	width:500px;
-	height:384px;
-	margin-top: -192px;
+	height:420px;
+	margin-top: -210px;
 	margin-left: -250px;
 	border: 1px solid #ccc;
 	border:  2px solid black;

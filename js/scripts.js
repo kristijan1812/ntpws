@@ -125,6 +125,20 @@ $(document).ready(function(){
         $('#page').animate({scrollTop:0}, '300');
     });
 
+    //SIGNUP FORM TO LOGIN FORM
+    $('#to-login button[type="redirect"]').on('click',function(e){
+        e.preventDefault();
+        $("#hider").fadeOut(200);
+        $('#popup_box_signup').fadeOut(200); 
+        $('#signup-username').val(''); 
+        $('#signup-password').val(''); 
+        $('#confirm-password').val('');
+        $("#msg-password-match").text('');
+        $('#msg-username-taken').text('');
+        $('#recaptcha-error').css("visibility", "hidden");
+        $(".login-container").show();
+    });
+
     //SIGNUP BUTTON
     $('#signup-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
