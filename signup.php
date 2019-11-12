@@ -9,7 +9,7 @@ if (mysqli_num_rows($results) > 0) {
     echo "taken";	
 }
 else{
-    $signup_qry = mysqli_query($DBCON, 'INSERT INTO users (`UserName`, `Password`) VALUES ("'.$username.'", "'.md5($password).'")');
+    $signup_qry = mysqli_query($DBCON, 'INSERT INTO users (`UserName`, `Password`, `UserType`) VALUES ("'.$username.'", "'.md5($password).'", "user")');
     echo "not_taken";
     
 }

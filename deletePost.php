@@ -1,7 +1,7 @@
 <?php
 include("dblayer.php");
 global $DBCON;
-mysqli_query($DBCON, 'DELETE FROM posts WHERE PostId='.$_POST["PostId"].';');
+mysqli_query($DBCON, 'DELETE FROM posts WHERE PostId='.$_POST["PostId"].'');
 ?>
 
 <div class="post-header">

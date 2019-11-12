@@ -10,3 +10,6 @@ Projekt: Kristijan Antolić
 
 
 
+Backend dio mora sadržavati login dio za korsinika s time da postoje role (administrator, user).
+Administrator može raditi sve u backend dijelu, dok user može samo čitati i unositi sadržaj preko administracije.
+Administracija mora imati sve elemente mogućnosti unosa, mijenjanja, brisanja i čitanja podataka.

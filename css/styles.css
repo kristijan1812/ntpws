@@ -59,11 +59,19 @@ body {
 	cursor: pointer;
 }
 
-.delete-button img{
+.delete-button img, .admin-delete img{
 	max-height:25px;
 }
 
-.edit-button img{
+#admin-content tr{
+	height:50px;
+}
+
+.clearfix {
+    clear:both;
+}
+
+.edit-button img, .admin-edit img{
 	max-height:20px;
 	margin-bottom: 3px;
 }
@@ -230,10 +238,12 @@ footer a{
 	padding: 8px 11px;
 }
 
-#site-posts, #signup-outer-container{
+#site-posts, #signup-outer-container, #admin-content{
 	width: 65%;
 	margin: 0 auto;
 }
+
+
 
 .sort-button{
 	padding: 4px 6px;

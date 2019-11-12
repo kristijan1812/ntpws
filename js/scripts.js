@@ -139,6 +139,12 @@ $(document).ready(function(){
         $(".login-container").show();
     });
 
+    //ADMIN PAGE BUTTON
+    $('#adminPage-button').on('click',function(e){
+        e.preventDefault();
+        $(".site-content").load("adminPage.php");
+    });
+    
     //SIGNUP BUTTON
     $('#signup-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
@@ -167,7 +173,7 @@ $(document).ready(function(){
                         Ajax("POST", "login.php", "json", data)
                         .then(function(result){
                             $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
-                            $(".logout-button").toggleClass("show-menu");
+                           
                             $(".site-content").load("home.php");
                         })
                         .catch(function(error){
@@ -198,10 +204,15 @@ $(document).ready(function(){
         }
         Ajax("POST", "login.php", "json", data)
         .then(function(result){
-            $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
-            $(".logout-button").toggleClass("show-menu");
-            $(".site-content").load("home.php");
             $("#session").attr("value", result.UserId);
+            if(result.UserType == "admin"){
+                $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><button class='header-button' id='adminPage-button' >admin Page</button><p>Welcome, "+result.Username+"</p>");
+                $(".site-content").load("adminPage.php");
+            } 
+            else{
+                $("#login .container").html("<a href='logout.php' id='logout-button'><button class='header-button'>logout</button></a><p>Welcome, "+result.Username+"</p>");
+                $(".site-content").load("home.php");
+            }
         })
         .catch(function(error){
             console.log(error);
@@ -319,6 +330,26 @@ $(document).ready(function(){
             Ajax("POST", "deletePost.php", "html", data)
             .then(function(result){
                 $(".post[postid='" + $id_from_this_post + "']").html(result);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }
+    });
+
+    //DELETE USER ADMIN BUTTON
+    $('.site-content').on('click', '.admin-delete', function(e){
+        e.preventDefault();
+        var confirmation = confirm("Are you sure you want to remove this user?");
+        $id_from_this_user = $(this).parent().siblings().first().text();
+        $this_tr=$(this).parent().parent();
+        if (confirmation) {
+            var data = {
+                "UserId" : parseInt($id_from_this_user)
+            }
+            Ajax("POST", "deleteUser.php", "html", data)
+            .then(function(result){
+                $this_tr.html(result);
             })
             .catch(function(error){
                 console.log(error);

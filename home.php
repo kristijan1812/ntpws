@@ -97,7 +97,7 @@ else{ ?>
             <p class ="post-text-paragraph" style='margin-bottom: 20px;word-wrap: break-word;'><?php echo nl2br($post['PostText']); ?></p><hr style="margin-bottom:36px;"/>
             <div class="post-edit-area">
                 <?php
-                if (isset($_SESSION['UserName']) && $post['UserId'] == $_SESSION['UserId']){?>
+                if (isset($_SESSION['UserName']) && $post['UserId'] == $_SESSION['UserId'] || isset($_SESSION['UserType']) && $_SESSION['UserType'] == "admin"){?>
                     <div class="editing-buttons delete-button" postId="<?php echo $post['PostId']; ?>"><img src="media/images/delete-button.png" /></div>
                     <div class="editing-buttons edit-button" postId="<?php echo $post['PostId']; ?>"><img src="media/images/edit-button.png" /></div><?php
                 }

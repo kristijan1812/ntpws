@@ -11,9 +11,10 @@ $rows = mysqli_num_rows($login_data);
 $row = mysqli_fetch_array($login_data);
 
 if ($rows > 0){
-    echo '{ "Result": "Logged in", "Username": "'.$username.'", "UserId": "'.$row['UserId'].'"}';
+    echo '{ "Result": "Logged in", "Username": "'.$username.'", "UserId": "'.$row['UserId'].'", "UserType": "'.$row['UserType'].'"}';
     $_SESSION['UserName'] = $username;
     $_SESSION['UserId'] = $row['UserId'];
+    $_SESSION['UserType'] = $row['UserType'];
 }
 else{ 
     header('HTTP/1.0 404 Not Found');

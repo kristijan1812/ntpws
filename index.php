@@ -61,11 +61,16 @@ global $DBCON;
 						<li id="login">
 							<div class="container">
 								<?php
-								if (isset($_SESSION['UserName'])) {
+								if (isset($_SESSION['UserName']) && isset($_SESSION['UserType']) && $_SESSION['UserType']=='admin') {
 									?>
-									<a href='logout.php' id='logout-button'><button class="header-button" >logout</button></a><p>Welcome, <?php echo ($_SESSION['UserName']); ?></p>
+									<a href='logout.php' id='logout-button'><button class="header-button" >logout</button></a><button class="header-button" id="adminPage-button" >admin Page</button><p>Welcome, <?php echo ($_SESSION['UserName']); ?></p>
 								<?php
-								} else {
+								} 
+								else if (isset($_SESSION['UserName']) && isset($_SESSION['UserType']) && $_SESSION['UserType']=='user'){
+									?><a href='logout.php' id='logout-button'><button class="header-button" >logout</button></a><p>Welcome, <?php echo ($_SESSION['UserName']); ?></p>
+								<?php
+								}
+								else {
 									?>
 									<button class="header-button" id="login-button">log in</button>
 									<button class="header-button" id="signup-button" >sign up</button>
