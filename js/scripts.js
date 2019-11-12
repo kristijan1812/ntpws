@@ -357,6 +357,64 @@ $(document).ready(function(){
         }
     });
 
+    //ADMIN EDIT USER BUTTON
+    $('.site-content').on('click', '.admin-edit', function(e){
+        e.preventDefault();
+        $(this).parent().siblings(".username").after("<td id='Username_edited_td'><input type='text' name='UserName' id='Username_edited' class='header-button' style='border:none;' placeholder='Edit Username' minlength=4 maxlength=15 value='"+$(this).parent().siblings('.username').text()+"'></input></td>");
+        $(this).parent().siblings(".username").hide();
+        $(this).parent().siblings(".password").after("<td id='Password_edited_td'><input type='text' name='Password' id='Password_edited' class='header-button' style='border:none;' placeholder='Edit Password' minlength=4 maxlength=15></input></td>");
+        $(this).parent().siblings(".password").hide();
+        $(this).after("<input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='EditUser' value='POST'/><input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='CancelEditUser' value='CANCEL'/><p id='msg-edit-short' style='visibility:hidden;'></p>");
+        $(this).hide();
+    });
+
+    
+
+    //CANCEL ADMIN EDIT USER BUTTON
+    $('.site-content').on('click', '#CancelEditUser', function(e){
+        e.preventDefault();
+        $(this).parent().siblings(".username").show();
+        $(this).parent().siblings("#Username_edited_td").remove();
+        $(this).parent().siblings(".password").show();
+        $(this).parent().siblings("#Password_edited_td").remove();
+        $(this).siblings("#EditUser").remove();
+        $(this).siblings(".admin-edit").show();
+        $(this).remove();
+    });
+
+    //SUBMIT ADMIN EDIT USER BUTTON
+    $('.site-content').on('click', '#EditUser', function(e){
+        e.preventDefault();
+        if($("#Username_edited").val().length < 4 && $("#Password_edited").val().length < 4){
+            $("#msg-edit-short").html("The username (min. 4 characters) and password (min. 4 characters) are too short!").css("visibility", "visible");
+        }
+        else if($("#Username_edited").val().length < 4){
+            $("#msg-edit-short").html("The username (min. 4 characters) is too short!").css("visibility", "visible");
+        }
+        else if($("#Password_edited").val().length < 4){
+            $("#msg-edit-short").html("The password (min. 4 characters) is too short!").css("visibility", "visible");
+        }
+        else{
+            $("#msg-edit-short").css("visibility", "hidden");
+            $tr = $(this).parent().parent();
+            $userid = $(this).parents().siblings(".userid").text();
+            var data = {
+                "OldUserName" : $(this).parent().siblings(".username").text(),
+                "NewUserName" : $(this).parent().siblings("#Username_edited_td").children("#Username_edited").val(),
+                "NewPassword" : $(this).parent().siblings("#Password_edited_td").children("#Password_edited").val(),
+                "UserId" : parseInt($userid),
+                "DateCreated" : $(this).parent().siblings(".datecreated").text()
+            }
+            Ajax("POST", "editUser.php", "html", data)
+            .then(function(result){
+                $tr.html(result);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }  
+    });
+
     //EDIT POST BUTTON
     $('.site-content').on('click', '.edit-button', function(e){
         e.preventDefault();
