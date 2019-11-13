@@ -31,6 +31,10 @@ function get_timeago($ptime)
     }
 }
 
+if(isset($_SESSION['UserType']) && $_SESSION['UserType']=="admin"){
+    ?><div id="submit-post-form-notification">!!!Administrator can edit all posts!!!</div><?php
+}
+
 if (isset($_SESSION['UserId'])){ ?>
     <div id="submit-post-form" style="margin-bottom: 20px;">
         <form id="post-form">

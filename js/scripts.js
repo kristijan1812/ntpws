@@ -134,8 +134,8 @@ $(document).ready(function(){
         $('#signup-password').val(''); 
         $('#confirm-password').val('');
         $("#msg-password-match").text('');
-        $('#msg-username-taken').text('');
-        $('#recaptcha-error').css("visibility", "hidden");
+        $('#name-taken').text('');
+        $('#recaptcha-error').text('Username already taken!').css("visibility", "hidden");
         $(".login-container").show();
     });
 
@@ -194,7 +194,43 @@ $(document).ready(function(){
             }
        }
     });
+
+    //ADMIN ADD USER BUTTON
+    $('.site-content').on('click', '#admin-add-user', function(e){
+        e.preventDefault();
+        $("#newuser").remove();
+        $("#usertable").append('<tr id="newuser"><td class="userid" align="center"></td><td class="username" align="center"><input class ="input-data nospace" id="signup-username2" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" /></td><td class="password" align="center"><input class ="input-data nospace" id="signup-password2" type="text" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" /></td><td class="datecreated" align="center"></td><td align="center"></td><td align="center"><button class ="input-data " id="submit-user-admin">SUBMIT</button></td></tr><p id="recaptcha-error"></p>')
+    });
     
+    //ADD USER ADMIN BUTTON
+    $('site-content').on('click', '#submit-user-admin', function(e){
+        e.preventDefault();
+        alert("WOW");
+        if($("#signup-username").val().length < 4 || $("#signup-password").val().length < 4 ){
+            $('#recaptcha-error').html("Username and password must be at least 4 characters long.").css("visibility", "visible");
+        }
+        else{
+            $('#recaptcha-error').css("visibility", "hidden");
+            var data = { 
+                "Username": $("#signup-username2").val(),
+                "Password": $("#signup-password2").val()
+            }
+            //SIGNUP
+            Ajax("POST", "signup.php", "text", data)
+            .then(function(result){
+                if(result == 'taken'){
+                    $("#msg-username-taken").css("visibility", "visible");
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+                return false;
+            });
+            
+            
+       }
+    });
+
     //LOGIN BUTTON
     $('#login-form input[type="submit"]').on('click',function(e){
         e.preventDefault();
@@ -338,7 +374,7 @@ $(document).ready(function(){
     });
 
     //DELETE USER ADMIN BUTTON
-    $('.site-content').on('click', '.admin-delete', function(e){
+    $('.site-content').on('click', '.admin-delete-user', function(e){
         e.preventDefault();
         var confirmation = confirm("Are you sure you want to remove this user?");
         $id_from_this_user = $(this).parent().siblings().first().text();
@@ -357,18 +393,56 @@ $(document).ready(function(){
         }
     });
 
-    //ADMIN EDIT USER BUTTON
-    $('.site-content').on('click', '.admin-edit', function(e){
+    //DELETE LIKE ADMIN BUTTON
+    $('.site-content').on('click', '.admin-delete-like', function(e){
         e.preventDefault();
+        var confirmation = confirm("Are you sure you want to remove this vote?");
+        $id_from_this_like = $(this).parent().siblings(".likeid").text();
+        $this_tr=$(this).parent().parent();
+        if (confirmation) {
+            var data = {
+                "LikeId" : parseInt($id_from_this_like)
+            }
+            Ajax("POST", "deleteVote.php", "html", data)
+            .then(function(result){
+                $this_tr.html(result);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }
+    });
+
+    //ADMIN EDIT USER BUTTON
+    $('.site-content').on('click', '.admin-edit-user', function(e){
+        e.preventDefault();
+        $(this).parent().siblings(".userid").prepend("<p id='msg-edit-short' style='visibility:hidden;left: 25px;bottom: 67px;'></p>  ");
         $(this).parent().siblings(".username").after("<td id='Username_edited_td'><input type='text' name='UserName' id='Username_edited' class='header-button' style='border:none;' placeholder='Edit Username' minlength=4 maxlength=15 value='"+$(this).parent().siblings('.username').text()+"'></input></td>");
         $(this).parent().siblings(".username").hide();
-        $(this).parent().siblings(".password").after("<td id='Password_edited_td'><input type='text' name='Password' id='Password_edited' class='header-button' style='border:none;' placeholder='Edit Password' minlength=4 maxlength=15></input></td>");
+        $(this).parent().siblings(".password").after("<td id='Password_edited_td'><input type='checkbox' id='edit-user-password-cb' style='margin-left:75px;'  value='Keep old'><span style='font-size: 10px;'>Keep old password</span><input type='text' name='Password' id='Password_edited' class='header-button' style='border:none;' placeholder='Edit Password' minlength=4 maxlength=15></input></td>");
         $(this).parent().siblings(".password").hide();
-        $(this).after("<input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='EditUser' value='POST'/><input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='CancelEditUser' value='CANCEL'/><p id='msg-edit-short' style='visibility:hidden;'></p>");
+        $(this).after("<input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='EditUser' value='POST'/><input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='CancelEditUser' value='CANCEL'/>");
         $(this).hide();
     });
 
-    
+    //ADMIN EDIT VOTE BUTTON
+    $('.site-content').on('click', '.admin-edit-like', function(e){
+        e.preventDefault();
+        $(this).parent().siblings(".likevalue").after("<select id='EditedLike'><option value='1'>1</option><option value='-1'>-1</option></select>");
+        $(this).parent().siblings(".likevalue").hide();
+        $(this).after("<input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='EditLike' value='POST'/><input type='submit' class='Post-button' style='display:inline; margin-right:12px;' id='CancelEditLike' value='CANCEL'/>");
+        $(this).hide();
+    });
+
+    //CANCEL ADMIN EDIT VOTE BUTTON
+    $('.site-content').on('click', '#CancelEditLike', function(e){
+        e.preventDefault();
+        $(this).parent().siblings(".likevalue").show();
+        $(this).parent().siblings("#EditedLike").remove();
+        $(this).siblings("#EditLike").remove();
+        $(this).siblings(".admin-edit-like").show();
+        $(this).remove();
+    });
 
     //CANCEL ADMIN EDIT USER BUTTON
     $('.site-content').on('click', '#CancelEditUser', function(e){
@@ -378,20 +452,44 @@ $(document).ready(function(){
         $(this).parent().siblings(".password").show();
         $(this).parent().siblings("#Password_edited_td").remove();
         $(this).siblings("#EditUser").remove();
-        $(this).siblings(".admin-edit").show();
+        $(this).siblings(".admin-edit-user").show();
         $(this).remove();
+    });
+
+    //SUBMIT ADMIN EDIT LIKE BUTTON
+    $('.site-content').on('click', '#EditLike', function(e){
+        e.preventDefault();
+        $tr = $(this).parent().parent(); 
+        var data = {
+            "LikeId" : parseInt($(this).parents().siblings(".likeid").text()),
+            "UserId" : $(this).parents().siblings(".userid").text(),
+            "UserName" : $(this).parent().siblings(".username").text(),
+            "PostId" : $(this).parent().siblings(".posttitle").text(),
+            "PostTitle" : $(this).parent().siblings(".posttitle").text(),
+            "NewLikeValue" : parseInt($(this).parent().siblings("#EditedLike").val())
+        }
+        Ajax("POST", "editVote.php", "html", data)
+        .then(function(result){
+            $tr.html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+          
     });
 
     //SUBMIT ADMIN EDIT USER BUTTON
     $('.site-content').on('click', '#EditUser', function(e){
         e.preventDefault();
-        if($("#Username_edited").val().length < 4 && $("#Password_edited").val().length < 4){
+        if($("#Username_edited").val().length < 4 && $("#Password_edited").val().length < 4 && !$("#edit-user-password-cb").prop("checked")){
             $("#msg-edit-short").html("The username (min. 4 characters) and password (min. 4 characters) are too short!").css("visibility", "visible");
         }
         else if($("#Username_edited").val().length < 4){
+            $("#msg-edit-short").css("visibility", "hidden");
             $("#msg-edit-short").html("The username (min. 4 characters) is too short!").css("visibility", "visible");
         }
-        else if($("#Password_edited").val().length < 4){
+        else if($("#Password_edited").val().length < 4 && !$("#edit-user-password-cb").prop("checked")){
+            $("#msg-edit-short").css("visibility", "hidden");
             $("#msg-edit-short").html("The password (min. 4 characters) is too short!").css("visibility", "visible");
         }
         else{
@@ -399,9 +497,11 @@ $(document).ready(function(){
             $tr = $(this).parent().parent();
             $userid = $(this).parents().siblings(".userid").text();
             var data = {
+                "KeepOldPassword" : $("#edit-user-password-cb").prop("checked"),
                 "OldUserName" : $(this).parent().siblings(".username").text(),
                 "NewUserName" : $(this).parent().siblings("#Username_edited_td").children("#Username_edited").val(),
                 "NewPassword" : $(this).parent().siblings("#Password_edited_td").children("#Password_edited").val(),
+                "OldPassword" : $(this).parent().siblings(".password").text(),
                 "UserId" : parseInt($userid),
                 "DateCreated" : $(this).parent().siblings(".datecreated").text()
             }
@@ -478,6 +578,34 @@ $(document).ready(function(){
                 console.log(error);
             });
         }  
+    });
+
+    //ADMIN SELECT BUTTONS
+    $('.site-content').on('click', '#admin-manage-users',function(e) {
+        e.preventDefault();
+        Ajax("GET", "adminPage.php", "html", {"Manage":"Users"})
+        .then(function(result){
+            $(".site-content").html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });   
+    });
+
+    $('.site-content').on('click', '#admin-manage-votes',function(e) {
+        e.preventDefault();
+        Ajax("GET", "adminPage.php", "html", {"Manage":"Votes"})
+        .then(function(result){
+            $(".site-content").html(result);
+        })
+        .catch(function(error){
+            console.log(error);
+        });   
+    });
+
+    $('.site-content').on('click', '#admin-manage-posts',function(e) {
+        e.preventDefault();
+        $(".site-content").load("home.php");  
     });
 
     //SORTING FUNCTIONS

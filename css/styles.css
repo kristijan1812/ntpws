@@ -59,7 +59,7 @@ body {
 	cursor: pointer;
 }
 
-.delete-button img, .admin-delete img{
+.delete-button img, .admin-delete-user img, .admin-delete-like img{
 	max-height:25px;
 }
 
@@ -71,7 +71,7 @@ body {
     clear:both;
 }
 
-.edit-button img, .admin-edit img{
+.edit-button img, .admin-edit-user img, .admin-edit-like img{
 	max-height:20px;
 	margin-bottom: 3px;
 }
@@ -460,7 +460,7 @@ footer a{
       margin-bottom: 0;
 }
 
-#login-form input[type="submit"], #signup-form input[type="submit"], #buttonClose_signup_popup_box{
+#login-form input[type="submit"], #signup-form input[type="submit"], #buttonClose_signup_popup_box, #submit-user-admin{
 	color: #ffF;
 	background: #1BBC9B;
 	font-style: normal;
