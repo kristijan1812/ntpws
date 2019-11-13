@@ -519,7 +519,7 @@ footer a{
 	padding-bottom: 8px;
 }
 
-#recaptcha-error{
+#recaptcha-error, #recaptcha-error2{
 	color: #D8000C;
 	background-color: #FFBABA;
 	border-radius: 2px;

@@ -160,7 +160,8 @@ $(document).ready(function(){
             if ($(this).siblings("#confirm-password").val() == $(this).siblings("#signup-password").val()){
                 var data = { 
                     "Username": $("#signup-username").val(),
-                    "Password": $("#signup-password").val()
+                    "Password": $("#signup-password").val(),
+                    "Input" : "User"
                 }
                 //SIGNUP
                 Ajax("POST", "signup.php", "text", data)
@@ -199,27 +200,32 @@ $(document).ready(function(){
     $('.site-content').on('click', '#admin-add-user', function(e){
         e.preventDefault();
         $("#newuser").remove();
-        $("#usertable").append('<tr id="newuser"><td class="userid" align="center"></td><td class="username" align="center"><input class ="input-data nospace" id="signup-username2" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" /></td><td class="password" align="center"><input class ="input-data nospace" id="signup-password2" type="text" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" /></td><td class="datecreated" align="center"></td><td align="center"></td><td align="center"><button class ="input-data " id="submit-user-admin">SUBMIT</button></td></tr><p id="recaptcha-error"></p>')
+        $("#usertable").append('<tr id="newuser"><td class="userid" align="center"></td><td class="username" align="center"><input class ="input-data nospace" id="signup-username2" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" /></td><td class="password" align="center"><input class ="input-data nospace" id="signup-password2" type="text" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" /></td><td class="datecreated" align="center"></td><td align="center"></td><td align="center"><button class="input-data " id="submit-user-admin">SUBMIT</button></td></tr><p id="recaptcha-error2"></p>')
     });
     
     //ADD USER ADMIN BUTTON
-    $('site-content').on('click', '#submit-user-admin', function(e){
+    $('.site-content').on('click', '#submit-user-admin', function(e){
         e.preventDefault();
-        alert("WOW");
-        if($("#signup-username").val().length < 4 || $("#signup-password").val().length < 4 ){
-            $('#recaptcha-error').html("Username and password must be at least 4 characters long.").css("visibility", "visible");
+        $this_tr = $(this).parent().parent();
+        if($("#signup-username2").val().length < 4 || $("#signup-password2").val().length < 4 ){
+            $('#recaptcha-error2').html("Username and password must be at least 4 characters long.").css("visibility", "visible");
         }
         else{
-            $('#recaptcha-error').css("visibility", "hidden");
+            $('#recaptcha-error2').css("visibility", "hidden");
             var data = { 
                 "Username": $("#signup-username2").val(),
-                "Password": $("#signup-password2").val()
+                "Password": $("#signup-password2").val(),
+                "Input": "Admin"
             }
             //SIGNUP
             Ajax("POST", "signup.php", "text", data)
             .then(function(result){
                 if(result == 'taken'){
-                    $("#msg-username-taken").css("visibility", "visible");
+                    $("#recaptcha-error2").css("visibility", "visible");
+
+                }
+                else{
+                    $this_tr.html(result);
                 }
             })
             .catch(function(error){
