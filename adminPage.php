@@ -92,7 +92,7 @@ $qry = mysqli_query($DBCON, $query_content);
             }?>
             </tbody>
         </table>
-        <button class ="header-button " id="admin-add-user" type="redirect" style="display:block;">Add User</button>
+        <button class ="header-button " id="admin-add-user" type="redirect" style="display:block;">New User</button>
     <?php
     };?>
 </div><?php

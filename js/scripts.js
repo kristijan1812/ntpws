@@ -200,7 +200,7 @@ $(document).ready(function(){
     $('.site-content').on('click', '#admin-add-user', function(e){
         e.preventDefault();
         $("#newuser").remove();
-        $("#usertable").append('<tr id="newuser"><td class="userid" align="center"></td><td class="username" align="center"><input class ="input-data nospace" id="signup-username2" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" /></td><td class="password" align="center"><input class ="input-data nospace" id="signup-password2" type="text" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" /></td><td class="datecreated" align="center"></td><td align="center"></td><td align="center"><button class="input-data " id="submit-user-admin">SUBMIT</button></td></tr><p id="recaptcha-error2"></p>')
+        $("#usertable").append('<tr id="newuser"><td class="userid" align="center"></td><td class="username" align="center"><input class ="input-data nospace" id="signup-username2" type="text" minlength=4 maxlength=15 placeholder="Username (4 - 15 characters)" /></td><td class="password" align="center"><input class ="input-data nospace" id="signup-password2" type="text" minlength=4 maxlength=15 placeholder="Password (4 - 15 characters)" /></td><td class="datecreated" align="center"></td><td align="center"><button class="input-data " id="submit-user-admin">ADD USER</button></td><td align="center" style="position:relative;"><p id="recaptcha-error2" style="visibility: hidden;width: 140px;position: absolute;top: 5px;left: 76px;"></p></td></tr>');
     });
     
     //ADD USER ADMIN BUTTON
